@@ -8,11 +8,12 @@ from pathlib import Path
 # Explicit imports to satisfy Flake8
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 from tkinter.ttk import Scrollbar
-
+import tkinter.messagebox as msgbox
 import pyglet
 import ttkbootstrap as ttk
 import tkinter as tk
 from ttkbootstrap.constants import *
+import main as main
 
 pyglet.font.add_file("SourceSans3-Regular.ttf")
 pyglet.font.load("SourceSans3-Regular.ttf")
@@ -24,6 +25,9 @@ ASSETS_PATH = OUTPUT_PATH / Path("./assets")
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
+
+FixTerm = {"helm": -1, "chest": -1, "gauntlet": -1, "leg": -1}
+TreeDir = {}
 
 window = Tk()
 
@@ -102,12 +106,13 @@ entry_bg_1 = canvas.create_image(
     60.00000000000001,
     image=entry_image_1
 )
-entry_1 = Entry(
+HeadIDInputEntry = Entry(
     bd=0,
     bg="#383838",
     highlightthickness=0
 )
-entry_1.place(
+HeadIDInputEntry.insert(0, "-1")
+HeadIDInputEntry.place(
     x=410.9999999999999,
     y=50.00000000000001,
     width=74.0,
@@ -121,12 +126,13 @@ entry_bg_2 = canvas.create_image(
     60.00000000000001,
     image=entry_image_2
 )
-entry_2 = Entry(
+ChestIDInputEntry = Entry(
     bd=0,
     bg="#383838",
     highlightthickness=0
 )
-entry_2.place(
+ChestIDInputEntry.insert(0, "-1")
+ChestIDInputEntry.place(
     x=550.9999999999999,
     y=50.00000000000001,
     width=74.0,
@@ -140,12 +146,13 @@ entry_bg_3 = canvas.create_image(
     60.00000000000001,
     image=entry_image_3
 )
-entry_3 = Entry(
+LegIDInputEntry = Entry(
     bd=0,
     bg="#383838",
     highlightthickness=0
 )
-entry_3.place(
+LegIDInputEntry.insert(0, "-1")
+LegIDInputEntry.place(
     x=690.9999999999999,
     y=50.00000000000001,
     width=74.0,
@@ -159,12 +166,13 @@ entry_bg_4 = canvas.create_image(
     60.00000000000001,
     image=entry_image_4
 )
-entry_4 = Entry(
+GauntletIDInputEntry = Entry(
     bd=0,
     bg="#383838",
     highlightthickness=0
 )
-entry_4.place(
+GauntletIDInputEntry.insert(0, "-1")
+GauntletIDInputEntry.place(
     x=831.9999999999999,
     y=50.00000000000001,
     width=74.0,
@@ -178,12 +186,12 @@ entry_bg_5 = canvas.create_image(
     28.000000000000007,
     image=entry_image_5
 )
-entry_5 = Entry(
+armorIDOutputEntry = Entry(
     bd=0,
     bg="#383838",
     highlightthickness=0
 )
-entry_5.place(
+armorIDOutputEntry.place(
     x=831.9999999999999,
     y=18.000000000000007,
     width=74.0,
@@ -197,12 +205,12 @@ entry_bg_6 = canvas.create_image(
     28.000000000000007,
     image=entry_image_6
 )
-entry_6 = Entry(
+armorNameInputEntry = Entry(
     bd=0,
     bg="#383838",
     highlightthickness=0
 )
-entry_6.place(
+armorNameInputEntry.place(
     x=490.9999999999999,
     y=18.000000000000007,
     width=274.0,
@@ -216,12 +224,12 @@ entry_bg_7 = canvas.create_image(
     215.0,
     image=entry_image_7
 )
-entry_7 = Entry(
+MaxWgtInputEntry = Entry(
     bd=0,
     bg="#383838",
     highlightthickness=0
 )
-entry_7.place(
+MaxWgtInputEntry.place(
     x=103.99999999999989,
     y=205.0,
     width=211.0,
@@ -254,12 +262,12 @@ entry_bg_9 = canvas.create_image(
     269.0,
     image=entry_image_9
 )
-entry_9 = Entry(
+PoiInputEntry = Entry(
     bd=0,
     bg="#383838",
     highlightthickness=0
 )
-entry_9.place(
+PoiInputEntry.place(
     x=103.99999999999989,
     y=259.0,
     width=211.0,
@@ -273,12 +281,12 @@ entry_bg_10 = canvas.create_image(
     242.0,
     image=entry_image_10
 )
-entry_10 = Entry(
+CurrentWgtInputEntry = Entry(
     bd=0,
     bg="#383838",
     highlightthickness=0
 )
-entry_10.place(
+CurrentWgtInputEntry.place(
     x=103.99999999999989,
     y=232.0,
     width=211.0,
@@ -356,7 +364,7 @@ canvas.create_text(
     40.999999999999886,
     147.0,
     anchor="nw",
-    text="Up to                        Burden ",
+    text="Up to                        % Burden ",
     fill="#979797",
     font=("Source Sans 3", 16 * -1)
 )
@@ -537,7 +545,7 @@ button_1 = Button(
     image=button_image_1,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_1 clicked"),
+    command=lambda: findArmor(),
     relief="flat"
 )
 button_1.place(
@@ -553,7 +561,7 @@ button_2 = Button(
     image=button_image_2,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_2 clicked"),
+    command=lambda: calculateMode_1(),
     relief="flat"
 )
 button_2.place(
@@ -664,10 +672,11 @@ for size in Abss:
             height=20
         )
     key = key + 1
+selectedAbs.set(1)
 
 selectedWgtPercentID = tk.StringVar()
 radiobutton = []
-WgtPercent = ("70", "30", "3")
+WgtPercent = ("7", "3", "1")
 key1 = 0
 for size in WgtPercent:
     r = ttk.Radiobutton(
@@ -679,6 +688,7 @@ for size in WgtPercent:
         y=102 + 22 * key1,
         height=20)
     key1 = key1 + 1
+selectedWgtPercentID.set(7)
 
 '''
 yscroll = Scrollbar(orient=VERTICAL)
@@ -736,7 +746,7 @@ tree.anchor("center")
 tree.place(
     x=354,
     y=100, )
-
+'''
 myid = tree.insert("", "end", text="71", values=[])  # ""表示父节点是根
 myidx1 = tree.insert(myid, "end", text=" ", values=["头盔： Veteran\'s Helm 护甲： Veteran\'s Armor 手套： Gold\'Bracele"
                                                     "ts 护腿： Veteran\'s Greaves 重量： 39.5 "])
@@ -753,6 +763,7 @@ myidx7 = tree.insert(myid4, "end", text=" ", values=["头盔： Veteran\'s Helm 
                                                      "ts 护腿： Veteran\'s Greaves 重量： 39.5 "])
 myid4 = tree.insert("", "end", text="69", values=[])  # ""表示父节点是根
 myid4 = tree.insert("", "end", text="68", values=[])  # ""表示父节点是根
+'''
 
 
 # text表示显示出的文本，values是隐藏的值
@@ -761,9 +772,19 @@ myid4 = tree.insert("", "end", text="68", values=[])  # ""表示父节点是根
 
 
 def selectTree(event):
+    """
     for item in tree.selection():
-        item_text = tree.item(item, "values")
+        item_text = tree.item(item, "value")
         print(item_text)
+        wqdwe = tree.focus(item)
+        print(type(wqdwe))
+        """
+    curItem = tree.focus()
+    _dictionary = tree.item(curItem)
+    if len(_dictionary["values"])==2:
+        print(_dictionary["values"][0])
+        print(_dictionary["values"][1])
+        msgbox.showinfo("护甲信息",_dictionary["values"][1])
 
 
 # 选中行
@@ -773,6 +794,100 @@ tree.bind('<<TreeviewSelect>>', selectTree)
 def printSomeThing():
     print(selectedWgtPercentID.get())
     print(entry_8.get())
+    print(getWgtPercent())
+    # main.testfunction()
+    print(HeadIDInputEntry.get(), "1")
+    print(ChestIDInputEntry.get(), "2")
+    print(LegIDInputEntry.get(), "3")
+    print(GauntletIDInputEntry.get(), "4")
+    print(MaxWgtInputEntry.get(), "7")
+    print(entry_8.get(), "8")
+    print(PoiInputEntry.get(), "9")
+    print(CurrentWgtInputEntry.get(), "10")
+
+
+def getFixTerm(fixterm):
+    fixterm["Helm"] = HeadIDInputEntry.get()
+    fixterm["Chest"] = ChestIDInputEntry.get()
+    fixterm["Leg"] = LegIDInputEntry.get()
+    fixterm["Gauntlet"] = GauntletIDInputEntry.get()
+
+
+def findArmor():
+    print("button_1 clicked")
+    _ArmorName = armorNameInputEntry.get()
+    armorIDOutputEntry.delete(0, END)
+    armorIDOutputEntry.insert(0, main.findArmor(_ArmorName))
+
+
+def getWgtPercent():
+    _id = selectedWgtPercentID.get()
+    if _id == "7":
+        return 0.699
+    elif _id == "3":
+        return 0.299
+    elif _id == "1":
+        if type(entry_8.get()) == str and 0 < float(entry_8.get()) < 100:
+            return float(entry_8.get()) / 100
+        else:
+            return -1
+    else:
+        return -1
+
+
+def fillOutTree(doubleList):
+    for k in doubleList:
+        TreeDir[str(k) + "_parent"] = tree.insert("", "end", text=str(k), values=[])
+        for i in range(0, len(doubleList[k])):
+            # print(k,i,str(k) + "_" + str(i))
+            # print(doubleList[k][i].Helm.Name)
+            TreeDir[str(k) + "_" + str(i)] = tree.insert(TreeDir[str(k) + "_parent"], "end",
+                                                         text=str(k) + "_" + str(i),
+                                                         values=[("头盔：" + doubleList[k][i].Helm.Name
+                                                                  + "  护甲：" + doubleList[k][i].Chest.Name
+                                                                  + "  手套：" + doubleList[k][i].Gauntlet.Name
+                                                                  + "  护腿：" + doubleList[k][i].Leg.Name
+                                                                  + "  重量：" + str(doubleList[k][i].Wgt)),
+                                                                 "头盔：" + doubleList[k][i].Helm.Name +
+                                                                 "\n护甲：" + doubleList[k][i].Chest.Name +
+                                                                 "\n手套：" + doubleList[k][i].Gauntlet.Name +
+                                                                 "\n护腿：" + doubleList[k][i].Leg.Name +
+                                                                 "\n重量：" + str(doubleList[k][i].Wgt) +
+                                                                 "\n物理：" + str(doubleList[k][i].Phy) +
+                                                                 "\n打击抗性：" + str(doubleList[k][i].VSStr) +
+                                                                 "\n斩击抗性：" + str(doubleList[k][i].VSSla) +
+                                                                 "\n突刺抗性：" + str(doubleList[k][i].VSPie) +
+                                                                 "\n魔力抗性：" + str(doubleList[k][i].Mag) +
+                                                                 "\n火抗性：" + str(doubleList[k][i].Fir) +
+                                                                 "\n雷抗性：" + str(doubleList[k][i].Lit) +
+                                                                 "\n圣抗性：" + str(doubleList[k][i].Hol) +
+                                                                 "\n免疫力：" + str(doubleList[k][i].Imm) +
+                                                                 "\n健壮度：" + str(doubleList[k][i].Robu) +
+                                                                 "\n理智度：" + str(doubleList[k][i].Foc) +
+                                                                 "\n抗死度：" + str(doubleList[k][i].Vita) +
+                                                                 "\n韧性：" + str(doubleList[k][i].Poi) +
+                                                                 "\n韧重比：" + str(doubleList[k][i].PoiPerWgt)
+                                                                 ])
+
+
+def calculateMode_1():
+    _totalWeight = float(MaxWgtInputEntry.get())
+    _weaponAndRing = float(CurrentWgtInputEntry.get())
+    _ratio = getWgtPercent()
+    getFixTerm(FixTerm)
+    Player_SeparateByPoi = main.calculate(_totalWeight, _weaponAndRing, _ratio, FixTerm)
+    sortID = selectedAbs.get()
+    if sortID == "1":
+        for k in Player_SeparateByPoi:
+            print(k, len(Player_SeparateByPoi[k]))
+            Player_SeparateByPoi[k] = main.PhyInsertionSort(Player_SeparateByPoi[k])
+        for k in Player_SeparateByPoi:
+            Player_SeparateByPoi[k].reverse()
+            while len(Player_SeparateByPoi[k]) > 8:
+                Player_SeparateByPoi[k].pop()
+        for k in Player_SeparateByPoi:
+            print(k, len(Player_SeparateByPoi[k]))
+    fillOutTree(Player_SeparateByPoi)
 
 
 '''

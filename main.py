@@ -362,7 +362,7 @@ def separateByPoi(playerList):
     initPoi = playerList[len(playerList) - 1].Poi
     list1[initPoi] = []
     list1[initPoi].append(playerList[len(playerList) - 1])
-    for i in range(-len(playerList) + 2, 0):
+    for i in range(-len(playerList) + 2, 1):
         if playerList[-i].Poi == initPoi:
             list1[playerList[-i].Poi].append(playerList[-i])
         else:
@@ -481,31 +481,101 @@ print("头盔：", Player[2].Armor["Helm"].Name, Player[2].Armor["Helm"].Phy,
       "\n护腿：", Player[2].Armor["Leg"].Name, Player[2].Armor["Leg"].Phy)
 '''
 
-totalWeight = 77.8
-weaponAndRing = 14.7
-ratio = 0.699
 
-for i in range(0, len(HelmList_SortByPoiPerWgt)):  # 搜索装备id
-    if HelmList_SortByPoiPerWgt[i].Name == "Night Maiden Twin Crown":
-        print(i)
+def testfunction():
+    totalWeight = 50
+    weaponAndRing = 17.2
+    ratio = 0.699
 
-'''计算并显示负重前五'''
-Weight = calculateWeight(totalWeight, weaponAndRing, ratio)
-Player = fixWeightFindMaxPoi(Weight, FixTerm)
-print(len(Player))
-PoiInsertionSort(Player)
-Player_SeparateByPoi = separateByPoi(Player)
-for k in Player_SeparateByPoi:
-    print(k)
-    Player_SeparateByPoi[k] = PhyInsertionSort(Player_SeparateByPoi[k])
-print("头盔：", Player_SeparateByPoi[71][0].Helm.Name,
-      "\n护甲：", Player_SeparateByPoi[71][0].Chest.Name,
-      "\n手套：", Player_SeparateByPoi[71][0].Gauntlet.Name,
-      "\n护腿：", Player_SeparateByPoi[71][0].Leg.Name,
-      "\n韧性：", Player_SeparateByPoi[71][0].Poi,
-      "\n护甲重量：", Player_SeparateByPoi[71][0].Wgt,
-      "\n韧重比：", Player_SeparateByPoi[71][0].PoiPerWgt,
-      "\n###############################################")
+    for i in range(0, len(HelmList_SortByPoiPerWgt)):  # 搜索装备id
+        if HelmList_SortByPoiPerWgt[i].Name == "Night Maiden Twin Crown":
+            print(i)
+
+    '''计算并显示负重前五'''
+    Weight = calculateWeight(totalWeight, weaponAndRing, ratio)
+    Player = fixWeightFindMaxPoi(Weight, FixTerm)
+    print(len(Player))
+    PoiInsertionSort(Player)
+    Player_SeparateByPoi = separateByPoi(Player)
+    for k in Player_SeparateByPoi:
+        print(k)
+        Player_SeparateByPoi[k] = PhyInsertionSort(Player_SeparateByPoi[k])
+    for i in range(0,len(Player_SeparateByPoi[26])):
+        print("头盔：", Player_SeparateByPoi[26][i].Helm.Name,
+              "\n护甲：", Player_SeparateByPoi[26][i].Chest.Name,
+              "\n手套：", Player_SeparateByPoi[26][i].Gauntlet.Name,
+              "\n护腿：", Player_SeparateByPoi[26][i].Leg.Name,
+              "\n韧性：", Player_SeparateByPoi[26][i].Poi,
+              "\n护甲重量：", Player_SeparateByPoi[26][i].Wgt,
+              "\n韧重比：", Player_SeparateByPoi[26][i].PoiPerWgt,
+              "\ni:",i,
+              "\n###############################################")
+    Player_SeparateByPoi[26].reverse()
+    while len(Player_SeparateByPoi[26])>5:
+        Player_SeparateByPoi[26].pop()
+    for i in range(0,len(Player_SeparateByPoi[26])):
+        print("头盔：", Player_SeparateByPoi[26][i].Helm.Name,
+              "\n护甲：", Player_SeparateByPoi[26][i].Chest.Name,
+              "\n手套：", Player_SeparateByPoi[26][i].Gauntlet.Name,
+              "\n护腿：", Player_SeparateByPoi[26][i].Leg.Name,
+              "\n韧性：", Player_SeparateByPoi[26][i].Poi,
+              "\n护甲重量：", Player_SeparateByPoi[26][i].Wgt,
+              "\n韧重比：", Player_SeparateByPoi[26][i].PoiPerWgt,
+              "\ni:",i,
+              "\n###############################################")
+"""
+    i = 0
+    length = len(Player_SeparateByPoi[26])
+    while i <= length - 5:
+        Player_SeparateByPoi[26].remove(i)
+        print(i, Player_SeparateByPoi[26][i + 1].Wgt)
+        i = i + 1
+"""
+
+
+def calculate(_totalWeight, _weaponAndRing, _ratio, _FixTerm):
+    # totalWeight = 77.8
+    # weaponAndRing = 14.7
+    # ratio = 0.699
+    '''计算并显示负重前五'''
+    Weight = calculateWeight(_totalWeight, _weaponAndRing, _ratio)
+    Player = fixWeightFindMaxPoi(Weight, _FixTerm)
+    print(len(Player))
+    PoiInsertionSort(Player)
+    return separateByPoi(Player)
+
+'''
+    for k in Player_SeparateByPoi:
+        print(k)
+        Player_SeparateByPoi[k] = PhyInsertionSort(Player_SeparateByPoi[k])
+    for i in range(69, 72):
+        print("头盔：", Player_SeparateByPoi[i][0].Helm.Name,
+              "\n护甲：", Player_SeparateByPoi[i][0].Chest.Name,
+              "\n手套：", Player_SeparateByPoi[i][0].Gauntlet.Name,
+              "\n护腿：", Player_SeparateByPoi[i][0].Leg.Name,
+              "\n韧性：", Player_SeparateByPoi[i][0].Poi,
+              "\n护甲重量：", Player_SeparateByPoi[i][0].Wgt,
+              "\n韧重比：", Player_SeparateByPoi[i][0].PoiPerWgt,
+              "\n###############################################")
+'''
+
+def findArmor(_armorName):
+    for i in range(0, len(HelmList_SortByPoiPerWgt)):  # 搜索装备id
+        if HelmList_SortByPoiPerWgt[i].Name == _armorName:
+            return i
+    for i in range(0, len(ChestList_SortByPoiPerWgt)):  # 搜索装备id
+        if ChestList_SortByPoiPerWgt[i].Name == _armorName:
+            return i
+    for i in range(0, len(GauntletList_SortByPoiPerWgt)):  # 搜索装备id
+        if GauntletList_SortByPoiPerWgt[i].Name == _armorName:
+            return i
+    for i in range(0, len(LegList_SortByPoiPerWgt)):  # 搜索装备id
+        if LegList_SortByPoiPerWgt[i].Name == _armorName:
+            return i
+    return "Nothing Found"
+
+
+#testfunction()
 
 '''
 print(
