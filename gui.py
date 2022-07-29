@@ -28,7 +28,7 @@ def relative_to_assets(path: str) -> Path:
 
 FixTerm = {"helm": -1, "chest": -1, "gauntlet": -1, "leg": -1}
 TreeDir = {}
-
+currentMode = 1
 window = Tk()
 
 window.geometry("1125x566")
@@ -189,7 +189,7 @@ entry_bg_5 = canvas.create_image(
 armorIDOutputEntry = Entry(
     bd=0,
     bg="#383838",
-    highlightthickness=0
+    highlightthickness=0,
 )
 armorIDOutputEntry.place(
     x=831.9999999999999,
@@ -265,7 +265,7 @@ entry_bg_9 = canvas.create_image(
 PoiInputEntry = Entry(
     bd=0,
     bg="#383838",
-    highlightthickness=0
+    highlightthickness=0,
 )
 PoiInputEntry.place(
     x=103.99999999999989,
@@ -561,7 +561,7 @@ button_2 = Button(
     image=button_image_2,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: calculateMode_1(),
+    command=lambda: calculateButtonFunction(),
     relief="flat"
 )
 button_2.place(
@@ -577,7 +577,7 @@ button_3 = Button(
     image=button_image_3,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_3 clicked"),
+    command=lambda: changeModeTo1(),
     relief="flat"
 )
 button_3.place(
@@ -593,7 +593,7 @@ button_4 = Button(
     image=button_image_4,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_4 clicked"),
+    command=lambda: changeModeTo3(),
     relief="flat"
 )
 button_4.place(
@@ -622,13 +622,20 @@ DebugButton.place(
     height=40.0
 )
 
+modeText = ttk.Label(
+    anchor="nw",
+    text="当前模式:1",
+    font=("Source Sans 3", 12 * -1)
+)
+modeText.place(x=265, y=50)
+
 button_image_6 = PhotoImage(
     file=relative_to_assets("button_6.png"))
 button_6 = Button(
     image=button_image_6,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_6 clicked"),
+    command=lambda: changeModeTo2(),
     relief="flat"
 )
 button_6.place(
@@ -778,6 +785,18 @@ def selectTree(event):
 tree.bind('<<TreeviewSelect>>', selectTree)
 
 
+def changeModeTo1():
+    modeText.config(text="当前模式:1")
+
+
+def changeModeTo2():
+    modeText.config(text="当前模式:2")
+
+
+def changeModeTo3():
+    modeText.config(text="当前模式:3")
+
+
 def printSomeThing():
     # print(selectedWgtPercentID.get())
     # print(entry_8.get())
@@ -793,6 +812,7 @@ def printSomeThing():
     # print(CurrentWgtInputEntry.get(), "10")
     getFixTerm(FixTerm)
     print(FixTerm)
+    print(modeText.cget("text")[-1])
 
 
 def getFixTerm(fixterm):
@@ -836,7 +856,7 @@ def fillOutTreeMode1(doubleList):
                                                                   + "  护甲：" + doubleList[k][i].Chest.Name
                                                                   + "  手套：" + doubleList[k][i].Gauntlet.Name
                                                                   + "  护腿：" + doubleList[k][i].Leg.Name
-                                                                  + "  重量：" + str(doubleList[k][i].Wgt)),
+                                                                  + "  重量：" + str(round(doubleList[k][i].Wgt, 3))),
                                                                  "头盔：" + doubleList[k][i].Helm.Name +
                                                                  "\n护甲：" + doubleList[k][i].Chest.Name +
                                                                  "\n手套：" + doubleList[k][i].Gauntlet.Name +
@@ -903,7 +923,7 @@ def calculateMode_1():
     _weaponAndRing = float(CurrentWgtInputEntry.get())
     _ratio = getWgtPercent()
     getFixTerm(FixTerm)
-    Player_SeparateByPoi = main.calculate(_totalWeight, _weaponAndRing, _ratio, FixTerm)
+    Player_SeparateByPoi = main.calculateMod1(_totalWeight, _weaponAndRing, _ratio, FixTerm)
     sortID = selectedAbs.get()
     sort(Player_SeparateByPoi, sortID)
     for k in Player_SeparateByPoi:
@@ -911,6 +931,36 @@ def calculateMode_1():
         while len(Player_SeparateByPoi[k]) > 8:
             Player_SeparateByPoi[k].pop()
     fillOutTreeMode1(Player_SeparateByPoi)
+
+
+def calculateMode_2():
+    x = tree.get_children()
+    for item in x:
+        tree.delete(item)
+    _totalWeight = float(MaxWgtInputEntry.get())
+    _weaponAndRing = float(CurrentWgtInputEntry.get())
+    _ratio = getWgtPercent()
+    _tgtPoi = float(PoiInputEntry.get())
+    getFixTerm(FixTerm)
+    Player_SeparateByPoi = main.calculateMod2(_totalWeight, _weaponAndRing, _ratio, FixTerm, _tgtPoi)
+    if Player_SeparateByPoi == -1:
+        msgbox.showinfo("警告", "无法根据输入数据找到护甲组合！\n请更换数据后尝试!")
+        return
+    sortID = selectedAbs.get()
+    sort(Player_SeparateByPoi, sortID)
+    for k in Player_SeparateByPoi:
+        Player_SeparateByPoi[k].reverse()
+        while len(Player_SeparateByPoi[k]) > 50:
+            Player_SeparateByPoi[k].pop()
+    fillOutTreeMode1(Player_SeparateByPoi)
+
+
+def calculateButtonFunction():
+    mode = modeText.cget("text")
+    if mode[-1] == "1":
+        calculateMode_1()
+    elif mode[-1] == "2":
+        calculateMode_2()
 
 
 '''

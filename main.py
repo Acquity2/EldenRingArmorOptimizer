@@ -488,6 +488,49 @@ def fixWeightFindMaxPoi(weight, fixTerm):  # 指定重量最大韧性
     return _TmpPlayerList
 
 
+def fixWeightPoiFindMaxAbs(weight, fixTerm, tgtPoi):  # 指定重量最大韧性
+    key = 0
+    _searchRange = 89
+    _TmpPlayerList = {}
+    _playerLimit = 3000
+    count = 0
+    count1 = 0
+    for ChestKey in range(-len(ChestList_SortByPoiPerWgt) + 1, 0):
+        if fixTerm["chest"] != -1 and ChestKey != -fixTerm["chest"]:
+            continue
+        for LegKey in range(-len(LegList_SortByPoiPerWgt) + 1, 0):
+            if fixTerm["leg"] != -1 and LegKey != -fixTerm["leg"]:
+                continue
+            for GauntletKey in range(-len(GauntletList_SortByPoiPerWgt) + 1, 0):
+                if fixTerm["gauntlet"] != -1 and GauntletKey != -fixTerm["gauntlet"]:
+                    continue
+                for HelmKey in range(-len(HelmList_SortByPoiPerWgt) + 1, 0):
+                    if fixTerm["helm"] != -1 and HelmKey != -fixTerm["helm"]:
+                        continue
+                    _weight = HelmList_SortByPoiPerWgt[-HelmKey].Wgt + ChestList_SortByPoiPerWgt[-ChestKey].Wgt + \
+                              GauntletList_SortByPoiPerWgt[-GauntletKey].Wgt + LegList_SortByPoiPerWgt[-LegKey].Wgt
+                    _poi = HelmList_SortByPoiPerWgt[-HelmKey].Poi + ChestList_SortByPoiPerWgt[-ChestKey].Poi + \
+                           GauntletList_SortByPoiPerWgt[-GauntletKey].Poi + LegList_SortByPoiPerWgt[-LegKey].Poi
+                    if weight >= _weight and _poi == tgtPoi:
+                        _TmpPlayer = PlayerResistance(
+                            -HelmKey, HelmList_SortByPoiPerWgt,
+                            -ChestKey, ChestList_SortByPoiPerWgt,
+                            -GauntletKey, GauntletList_SortByPoiPerWgt,
+                            -LegKey, LegList_SortByPoiPerWgt
+                        )
+                        _TmpPlayerList[key] = _TmpPlayer
+                        key = key + 1
+                        count1 = count
+                    if count > 46372560:
+                        return _TmpPlayerList
+                    count = count + 1
+                    if key > 0 and count > count1 + 2000000:
+                        return _TmpPlayerList
+                    if key >= _playerLimit:
+                        return _TmpPlayerList
+    return _TmpPlayerList
+
+
 '''
 Player[1] = PlayerResistance(168, HelmList_SortByPoiPerWgt, 33, ChestList_SortByPoiPerWgt, 2, GauntletList_SortByPoiPerWgt, 4, LegList_SortByPoiPerWgt)
 print("头盔：", Player[1].Armor["Helm"].Name, Player[1].Armor["Helm"].Phy, "\n护甲：", Player[1].Armor["Chest"].Name,
@@ -545,6 +588,35 @@ def testfunction():
               "\n###############################################")
 
 
+def testfunction2():
+    totalWeight = 50
+    weaponAndRing = 17.2
+    ratio = 0.699
+    tgtPoi = 25
+    Weight = calculateWeight(totalWeight, weaponAndRing, ratio)
+    Player = fixWeightPoiFindMaxAbs(Weight, FixTerm, tgtPoi)
+    print(len(Player))
+    Player_SeparateByPoi = separateByPoi(Player)
+    print(Player_SeparateByPoi)
+    for key in Player_SeparateByPoi:
+        Player_SeparateByPoi[key] = LitInsertionSort(Player_SeparateByPoi[key])
+        Player_SeparateByPoi[key].reverse()
+        while len(Player_SeparateByPoi[key]) > 50:
+            Player_SeparateByPoi[key].pop()
+    for key in Player_SeparateByPoi:
+        for i in range(0, len(Player_SeparateByPoi[key])):
+            print("头盔：", Player_SeparateByPoi[key][i].Helm.Name,
+                  "\n护甲：", Player_SeparateByPoi[key][i].Chest.Name,
+                  "\n手套：", Player_SeparateByPoi[key][i].Gauntlet.Name,
+                  "\n护腿：", Player_SeparateByPoi[key][i].Leg.Name,
+                  "\n韧性：", Player_SeparateByPoi[key][i].Poi,
+                  "\n护甲重量：", Player_SeparateByPoi[key][i].Wgt,
+                  "\n韧重比：", Player_SeparateByPoi[key][i].PoiPerWgt,
+                  "\nLightning：", Player_SeparateByPoi[key][i].Lit,
+                  "\ni:", i,
+                  "\n###############################################")
+
+
 """
     i = 0
     length = len(Player_SeparateByPoi[26])
@@ -555,13 +627,27 @@ def testfunction():
 """
 
 
-def calculate(_totalWeight, _weaponAndRing, _ratio, _FixTerm):
+def calculateMod1(_totalWeight, _weaponAndRing, _ratio, _FixTerm):
     # totalWeight = 77.8
     # weaponAndRing = 14.7
     # ratio = 0.699
     '''计算并显示负重前五'''
     Weight = calculateWeight(_totalWeight, _weaponAndRing, _ratio)
     Player = fixWeightFindMaxPoi(Weight, _FixTerm)
+    print(len(Player))
+    PoiInsertionSort(Player)
+    return separateByPoi(Player)
+
+
+def calculateMod2(_totalWeight, _weaponAndRing, _ratio, _FixTerm, _tgtPoi):
+    # totalWeight = 77.8
+    # weaponAndRing = 14.7
+    # ratio = 0.699
+    '''计算并显示负重前五'''
+    Weight = calculateWeight(_totalWeight, _weaponAndRing, _ratio)
+    Player = fixWeightPoiFindMaxAbs(Weight, _FixTerm, _tgtPoi)
+    if len(Player) == 0:
+        return -1
     print(len(Player))
     PoiInsertionSort(Player)
     return separateByPoi(Player)
@@ -600,6 +686,7 @@ def findArmor(_armorName):
 
 
 # testfunction()
+# testfunction2()
 
 '''
 print(
