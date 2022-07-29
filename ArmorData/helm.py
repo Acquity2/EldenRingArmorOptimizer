@@ -3101,29 +3101,6 @@ text1 = '''<tbody>
     <td style="width: 145.172px;">3</td> 
    </tr> 
    <tr> 
-    <td style="text-align: center; width: 132px;"><a class="wiki_link" title="Elden Ring Grass Hair Ornament" href="/Grass+Hair+Ornament" target="">Grass Hair Ornament</a></td> 
-    <td style="text-align: center; width: 41px;">1.4</td> 
-    <td style="text-align: center; width: 44px;">1.4</td> 
-    <td style="text-align: center; width: 40px;">1.4</td> 
-    <td style="text-align: center; width: 44px;">0.9</td> 
-    <td style="text-align: center; width: 41px;">4.5</td> 
-    <td style="text-align: center; width: 46px;">4.2</td> 
-    <td style="text-align: center; width: 38px;">4.4</td> 
-    <td style="text-align: center; width: 42px;">4.5</td> 
-    <td style="text-align: center; width: 46px;">16</td> 
-    <td style="text-align: center; width: 44px;">9</td> 
-    <td style="text-align: center; width: 42px;">27</td> 
-    <td style="text-align: center; width: 44px;">27</td> 
-    <td style="text-align: center; width: 42px;">0</td> 
-    <td style="text-align: center; width: 48px;">1.4</td> 
-    <td style="width: 149px; text-align: center;"></td> 
-    <td style="width: 324.828px;"> 
-     <ul> 
-      <li>The<strong>Grass Hair Ornament</strong><a class="wiki_link" title="Elden Ring Helms" href="/Helms">Helm</a>iscurrently unavailable in-game.</li> 
-     </ul> </td> 
-    <td style="width: 145.172px;"></td> 
-   </tr> 
-   <tr> 
     <td style="text-align: center; width: 132px;"><a class="wiki_link" title="Elden Ring Greathood" href="/Greathood" target=""><img style="width: 75px; height: 75px;" title="Greathood" src="/file/Elden-Ring/greathood_elden_ring_wiki_guide_200px.png" alt="greathood elden ring wiki guide 200px" width="75" height="75"><br>Greathood</a></td> 
     <td style="text-align: center; width: 41px;">3.8</td> 
     <td style="text-align: center; width: 44px;">3.6</td> 

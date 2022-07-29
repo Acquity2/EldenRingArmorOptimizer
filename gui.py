@@ -605,7 +605,7 @@ button_4.place(
 
 button_image_5 = PhotoImage(
     file=relative_to_assets("button_5.png"))
-button_5 = Button(
+DebugButton = Button(
     image=button_image_5,
     borderwidth=0,
     highlightthickness=0,
@@ -615,7 +615,7 @@ button_5 = Button(
     ,
     relief="flat"
 )
-button_5.place(
+DebugButton.place(
     x=1.1368683772161603e-13,
     y=7.105427357601002e-15,
     width=66.0,
@@ -641,16 +641,15 @@ button_6.place(
 selectedAbs = tk.StringVar()
 Abss = (("Phy.Abs.", 1),
         ("VSStr.Abs.", 2),
-        ('VSStr.Abs.', 3),
-        ('VSSla.Abs.', 4),
-        ('VSPie.Abs.', 5),
-        ("Mag.Abs.", 6),
-        ("Fir.Abs.", 7),
-        ('Lit.Abs.', 8),
-        ('Hol.Abs', 9),
-        ('Imm.', 10),
-        ('Robu.', 11),
-        ('Foc.', 12)
+        ('VSSla.Abs.', 3),
+        ('VSPie.Abs.', 4),
+        ("Mag.Abs.", 5),
+        ("Fir.Abs.", 6),
+        ('Lit.Abs.', 7),
+        ('Hol.Abs', 8),
+        ('Imm.', 9),
+        ('Robu.', 10),
+        ('Foc.', 11)
         )
 key = 0
 for size in Abss:
@@ -766,25 +765,13 @@ myid4 = tree.insert("", "end", text="68", values=[])  # ""表示父节点是根
 '''
 
 
-# text表示显示出的文本，values是隐藏的值
-# myidy = tree.insert("", 1, "美国", text="美国USA", values=["4"])
-# myidy1 = tree.insert(myidy, 0, "加州", text="美国加州", values=["5"])
-
-
 def selectTree(event):
-    """
-    for item in tree.selection():
-        item_text = tree.item(item, "value")
-        print(item_text)
-        wqdwe = tree.focus(item)
-        print(type(wqdwe))
-        """
     curItem = tree.focus()
     _dictionary = tree.item(curItem)
-    if len(_dictionary["values"])==2:
+    if len(_dictionary["values"]) == 2:
         print(_dictionary["values"][0])
         print(_dictionary["values"][1])
-        msgbox.showinfo("护甲信息",_dictionary["values"][1])
+        msgbox.showinfo("护甲信息", _dictionary["values"][1])
 
 
 # 选中行
@@ -792,25 +779,27 @@ tree.bind('<<TreeviewSelect>>', selectTree)
 
 
 def printSomeThing():
-    print(selectedWgtPercentID.get())
-    print(entry_8.get())
-    print(getWgtPercent())
+    # print(selectedWgtPercentID.get())
+    # print(entry_8.get())
+    # print(getWgtPercent())
     # main.testfunction()
-    print(HeadIDInputEntry.get(), "1")
-    print(ChestIDInputEntry.get(), "2")
-    print(LegIDInputEntry.get(), "3")
-    print(GauntletIDInputEntry.get(), "4")
-    print(MaxWgtInputEntry.get(), "7")
-    print(entry_8.get(), "8")
-    print(PoiInputEntry.get(), "9")
-    print(CurrentWgtInputEntry.get(), "10")
+    # print(HeadIDInputEntry.get(), "1")
+    # print(ChestIDInputEntry.get(), "2")
+    # print(LegIDInputEntry.get(), "3")
+    # print(GauntletIDInputEntry.get(), "4")
+    # print(MaxWgtInputEntry.get(), "7")
+    # print(entry_8.get(), "8")
+    # print(PoiInputEntry.get(), "9")
+    # print(CurrentWgtInputEntry.get(), "10")
+    getFixTerm(FixTerm)
+    print(FixTerm)
 
 
 def getFixTerm(fixterm):
-    fixterm["Helm"] = HeadIDInputEntry.get()
-    fixterm["Chest"] = ChestIDInputEntry.get()
-    fixterm["Leg"] = LegIDInputEntry.get()
-    fixterm["Gauntlet"] = GauntletIDInputEntry.get()
+    fixterm["helm"] = int(HeadIDInputEntry.get())
+    fixterm["chest"] = int(ChestIDInputEntry.get())
+    fixterm["leg"] = int(LegIDInputEntry.get())
+    fixterm["gauntlet"] = int(GauntletIDInputEntry.get())
 
 
 def findArmor():
@@ -835,7 +824,7 @@ def getWgtPercent():
         return -1
 
 
-def fillOutTree(doubleList):
+def fillOutTreeMode1(doubleList):
     for k in doubleList:
         TreeDir[str(k) + "_parent"] = tree.insert("", "end", text=str(k), values=[])
         for i in range(0, len(doubleList[k])):
@@ -852,42 +841,76 @@ def fillOutTree(doubleList):
                                                                  "\n护甲：" + doubleList[k][i].Chest.Name +
                                                                  "\n手套：" + doubleList[k][i].Gauntlet.Name +
                                                                  "\n护腿：" + doubleList[k][i].Leg.Name +
-                                                                 "\n重量：" + str(doubleList[k][i].Wgt) +
-                                                                 "\n物理：" + str(doubleList[k][i].Phy) +
-                                                                 "\n打击抗性：" + str(doubleList[k][i].VSStr) +
-                                                                 "\n斩击抗性：" + str(doubleList[k][i].VSSla) +
-                                                                 "\n突刺抗性：" + str(doubleList[k][i].VSPie) +
-                                                                 "\n魔力抗性：" + str(doubleList[k][i].Mag) +
-                                                                 "\n火抗性：" + str(doubleList[k][i].Fir) +
-                                                                 "\n雷抗性：" + str(doubleList[k][i].Lit) +
-                                                                 "\n圣抗性：" + str(doubleList[k][i].Hol) +
-                                                                 "\n免疫力：" + str(doubleList[k][i].Imm) +
-                                                                 "\n健壮度：" + str(doubleList[k][i].Robu) +
-                                                                 "\n理智度：" + str(doubleList[k][i].Foc) +
-                                                                 "\n抗死度：" + str(doubleList[k][i].Vita) +
-                                                                 "\n韧性：" + str(doubleList[k][i].Poi) +
-                                                                 "\n韧重比：" + str(doubleList[k][i].PoiPerWgt)
+                                                                 "\n重量：" + str(round(doubleList[k][i].Wgt, 3)) +
+                                                                 "\n物理：" + str(round(doubleList[k][i].Phy, 3)) +
+                                                                 "\n打击抗性：" + str(round(doubleList[k][i].VSStr, 3)) +
+                                                                 "\n斩击抗性：" + str(round(doubleList[k][i].VSSla, 3)) +
+                                                                 "\n突刺抗性：" + str(round(doubleList[k][i].VSPie, 3)) +
+                                                                 "\n魔力抗性：" + str(round(doubleList[k][i].Mag, 3)) +
+                                                                 "\n火抗性：" + str(round(doubleList[k][i].Fir, 3)) +
+                                                                 "\n雷抗性：" + str(round(doubleList[k][i].Lit, 3)) +
+                                                                 "\n圣抗性：" + str(round(doubleList[k][i].Hol, 3)) +
+                                                                 "\n免疫力：" + str(round(doubleList[k][i].Imm, 3)) +
+                                                                 "\n健壮度：" + str(round(doubleList[k][i].Robu, 3)) +
+                                                                 "\n理智度：" + str(round(doubleList[k][i].Foc, 3)) +
+                                                                 "\n抗死度：" + str(round(doubleList[k][i].Vita, 3)) +
+                                                                 "\n韧性：" + str(round(doubleList[k][i].Poi, 3)) +
+                                                                 "\n韧重比：" + str(round(doubleList[k][i].PoiPerWgt, 3))
                                                                  ])
 
 
+def sort(playerList, sortID):
+    if sortID == "1":
+        for k in playerList:
+            playerList[k] = main.PhyInsertionSort(playerList[k])
+    elif sortID == "2":
+        for k in playerList:
+            playerList[k] = main.VSStrInsertionSort(playerList[k])
+    elif sortID == "3":
+        for k in playerList:
+            playerList[k] = main.VSSlaInsertionSort(playerList[k])
+    elif sortID == "4":
+        for k in playerList:
+            playerList[k] = main.VSPieInsertionSort(playerList[k])
+    elif sortID == "5":
+        for k in playerList:
+            playerList[k] = main.MagInsertionSort(playerList[k])
+    elif sortID == "6":
+        for k in playerList:
+            playerList[k] = main.FirInsertionSort(playerList[k])
+    elif sortID == "7":
+        for k in playerList:
+            playerList[k] = main.LitInsertionSort(playerList[k])
+    elif sortID == "8":
+        for k in playerList:
+            playerList[k] = main.HolInsertionSort(playerList[k])
+    elif sortID == "9":
+        for k in playerList:
+            playerList[k] = main.ImmInsertionSort(playerList[k])
+    elif sortID == "10":
+        for k in playerList:
+            playerList[k] = main.RobuInsertionSort(playerList[k])
+    elif sortID == "11":
+        for k in playerList:
+            playerList[k] = main.FocInsertionSort(playerList[k])
+
+
 def calculateMode_1():
+    x = tree.get_children()
+    for item in x:
+        tree.delete(item)
     _totalWeight = float(MaxWgtInputEntry.get())
     _weaponAndRing = float(CurrentWgtInputEntry.get())
     _ratio = getWgtPercent()
     getFixTerm(FixTerm)
     Player_SeparateByPoi = main.calculate(_totalWeight, _weaponAndRing, _ratio, FixTerm)
     sortID = selectedAbs.get()
-    if sortID == "1":
-        for k in Player_SeparateByPoi:
-            print(k, len(Player_SeparateByPoi[k]))
-            Player_SeparateByPoi[k] = main.PhyInsertionSort(Player_SeparateByPoi[k])
-        for k in Player_SeparateByPoi:
-            Player_SeparateByPoi[k].reverse()
-            while len(Player_SeparateByPoi[k]) > 8:
-                Player_SeparateByPoi[k].pop()
-        for k in Player_SeparateByPoi:
-            print(k, len(Player_SeparateByPoi[k]))
-    fillOutTree(Player_SeparateByPoi)
+    sort(Player_SeparateByPoi, sortID)
+    for k in Player_SeparateByPoi:
+        Player_SeparateByPoi[k].reverse()
+        while len(Player_SeparateByPoi[k]) > 8:
+            Player_SeparateByPoi[k].pop()
+    fillOutTreeMode1(Player_SeparateByPoi)
 
 
 '''

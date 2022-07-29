@@ -1,21 +1,16 @@
-k = []
+import xlrd
 
+data = xlrd.open_workbook("ArmorNameList1.xls")
+table = data.sheets()[0]
+ArmorDir = {}
+for i in range(0, 572):
+    table_list = table.row_values(rowx=i, start_colx=0, end_colx=None)
+    ArmorDir[table_list[0]] = table_list[1]
 
-for i in range(0, 10):
-    k.append(i)
+print(len(ArmorDir))
+print(ArmorDir)
 
-for key in k:
-    print(key, k[key])
-
-
-
-print(k)
-for i in range(0,len(k)):
-    print(i,k[i])
-
-length = len(k)
-i = 0
-while i <= length - 5:
-    k.remove(i)
-    print(len(k))
-    i = i + 1
+if ArmorDir["dqwd"]:
+    print("true")
+else:
+    print("f")

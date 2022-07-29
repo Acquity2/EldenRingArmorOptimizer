@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.messagebox as msgbox
 from ArmorData import chest, helm, gauntlet, leg
+import xlrd
 import json
 
 """print(helm.text())"""
@@ -23,6 +24,13 @@ Player = {}
 Player_SeparateByPoi = {}
 
 FixTerm = {"helm": -1, "chest": -1, "gauntlet": -1, "leg": -1}
+
+data = xlrd.open_workbook("ArmorNameList1.xls")
+table = data.sheets()[0]
+ArmorDir = {}
+for i in range(0, 572):
+    table_list = table.row_values(rowx=i, start_colx=0, end_colx=None)
+    ArmorDir[table_list[0]] = table_list[1]
 
 
 class Armor:
@@ -388,6 +396,18 @@ for i in range(0, len(gauntletStrList) - 2):
 legStrList = legRawXMLStr.split("</tr>")
 for i in range(0, len(legStrList) - 2):
     LegList[i] = Chest(legStrList[i])
+
+for k in HelmList:
+    HelmList[k].Name = ArmorDir[HelmList[k].Name]
+
+for k in ChestList:
+    ChestList[k].Name = ArmorDir[ChestList[k].Name]
+
+for k in GauntletList:
+    GauntletList[k].Name = ArmorDir[GauntletList[k].Name]
+
+for k in LegList:
+    LegList[k].Name = ArmorDir[LegList[k].Name]
 ############################################# 初始化部分 #############################################
 
 print("头盔总数：", len(HelmList), "胸甲总数：", len(ChestList), "手套总数：", len(GauntletList), "护腿总数：", len(LegList))
@@ -437,7 +457,7 @@ def fixWeightFindMaxPoi(weight, fixTerm):  # 指定重量最大韧性
     key = 0
     _searchRange = 89
     _TmpPlayerList = {}
-    _playerLimit = 10000
+    _playerLimit = 13000
     for ChestKey in range(-len(ChestList_SortByPoiPerWgt) + 1, 0):
         if fixTerm["chest"] != -1 and ChestKey != -fixTerm["chest"]:
             continue
@@ -500,7 +520,7 @@ def testfunction():
     for k in Player_SeparateByPoi:
         print(k)
         Player_SeparateByPoi[k] = PhyInsertionSort(Player_SeparateByPoi[k])
-    for i in range(0,len(Player_SeparateByPoi[26])):
+    for i in range(0, len(Player_SeparateByPoi[26])):
         print("头盔：", Player_SeparateByPoi[26][i].Helm.Name,
               "\n护甲：", Player_SeparateByPoi[26][i].Chest.Name,
               "\n手套：", Player_SeparateByPoi[26][i].Gauntlet.Name,
@@ -508,12 +528,12 @@ def testfunction():
               "\n韧性：", Player_SeparateByPoi[26][i].Poi,
               "\n护甲重量：", Player_SeparateByPoi[26][i].Wgt,
               "\n韧重比：", Player_SeparateByPoi[26][i].PoiPerWgt,
-              "\ni:",i,
+              "\ni:", i,
               "\n###############################################")
     Player_SeparateByPoi[26].reverse()
-    while len(Player_SeparateByPoi[26])>5:
+    while len(Player_SeparateByPoi[26]) > 5:
         Player_SeparateByPoi[26].pop()
-    for i in range(0,len(Player_SeparateByPoi[26])):
+    for i in range(0, len(Player_SeparateByPoi[26])):
         print("头盔：", Player_SeparateByPoi[26][i].Helm.Name,
               "\n护甲：", Player_SeparateByPoi[26][i].Chest.Name,
               "\n手套：", Player_SeparateByPoi[26][i].Gauntlet.Name,
@@ -521,8 +541,10 @@ def testfunction():
               "\n韧性：", Player_SeparateByPoi[26][i].Poi,
               "\n护甲重量：", Player_SeparateByPoi[26][i].Wgt,
               "\n韧重比：", Player_SeparateByPoi[26][i].PoiPerWgt,
-              "\ni:",i,
+              "\ni:", i,
               "\n###############################################")
+
+
 """
     i = 0
     length = len(Player_SeparateByPoi[26])
@@ -544,6 +566,7 @@ def calculate(_totalWeight, _weaponAndRing, _ratio, _FixTerm):
     PoiInsertionSort(Player)
     return separateByPoi(Player)
 
+
 '''
     for k in Player_SeparateByPoi:
         print(k)
@@ -558,6 +581,7 @@ def calculate(_totalWeight, _weaponAndRing, _ratio, _FixTerm):
               "\n韧重比：", Player_SeparateByPoi[i][0].PoiPerWgt,
               "\n###############################################")
 '''
+
 
 def findArmor(_armorName):
     for i in range(0, len(HelmList_SortByPoiPerWgt)):  # 搜索装备id
@@ -575,7 +599,7 @@ def findArmor(_armorName):
     return "Nothing Found"
 
 
-#testfunction()
+# testfunction()
 
 '''
 print(
