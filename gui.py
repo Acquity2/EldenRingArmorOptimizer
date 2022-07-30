@@ -14,6 +14,7 @@ import ttkbootstrap as ttk
 import tkinter as tk
 from ttkbootstrap.constants import *
 import main as main
+import webbrowser
 
 pyglet.font.add_file("SourceSans3-Regular.ttf")
 pyglet.font.load("SourceSans3-Regular.ttf")
@@ -30,6 +31,7 @@ FixTerm = {"helm": -1, "chest": -1, "gauntlet": -1, "leg": -1}
 TreeDir = {}
 currentMode = 1
 window = Tk()
+window.title("艾尔登法环护甲计算器")
 
 window.geometry("1125x566")
 window.configure(bg="#252525")
@@ -697,12 +699,7 @@ for size in WgtPercent:
 selectedWgtPercentID.set(7)
 
 '''
-yscroll = Scrollbar(orient=VERTICAL)
-yscroll.place(
-    x=1098,
-    y=100,
-    height=443
-)
+
 columns = ['护甲搭配组合']
 table = ttk.Treeview(
     height=24,  # 表格显示的行数,height行
@@ -739,8 +736,18 @@ def selectTree(event):
         item_text = table.item(item, "values")
         print(item_text)
 '''
+
+yscroll = Scrollbar(orient=VERTICAL)
+yscroll.place(
+    x=1098,
+    y=100,
+    height=425
+)
 columns = ['1']
-tree = ttk.Treeview(height=24, columns=columns, )
+tree = ttk.Treeview(height=23,
+                    columns=columns,
+                    yscrollcommand=yscroll.set,
+                    )
 tree.heading(column='#0', text='韧性', anchor=W,
              command=lambda: print('护甲搭配组合'))
 tree.heading(column='1', text='护甲搭配组合', anchor=W,
@@ -915,6 +922,31 @@ def sort(playerList, sortID):
             playerList[k] = main.FocInsertionSort(playerList[k])
 
 
+def getSortKey(sortID):
+    if sortID == "1":
+        return "SortByPhy"
+    elif sortID == "2":
+        return "SortByVSStr"
+    elif sortID == "3":
+        return "SortByVSSla"
+    elif sortID == "4":
+        return "SortByVSPie"
+    elif sortID == "5":
+        return "SortByMag"
+    elif sortID == "6":
+        return "SortByFir"
+    elif sortID == "7":
+        return "SortByLit"
+    elif sortID == "8":
+        return "SortByHol"
+    elif sortID == "9":
+        return "SortByImm"
+    elif sortID == "10":
+        return "SortByRobu"
+    elif sortID == "11":
+        return "SortByFoc"
+
+
 def calculateMode_1():
     x = tree.get_children()
     for item in x:
@@ -955,12 +987,60 @@ def calculateMode_2():
     fillOutTreeMode1(Player_SeparateByPoi)
 
 
+def calculateMode_3():
+    x = tree.get_children()
+    for item in x:
+        tree.delete(item)
+    _totalWeight = float(MaxWgtInputEntry.get())
+    _weaponAndRing = float(CurrentWgtInputEntry.get())
+    Player_SeparateByPoi = {}
+    _ratio = getWgtPercent()
+    sortID = selectedAbs.get()
+    _sortKey = getSortKey(sortID)
+    Player = main.calculateMod3(_totalWeight, _weaponAndRing, _ratio, _sortKey)
+    Player_SeparateByPoi["nil"] = Player
+    sort(Player_SeparateByPoi, sortID)
+    Player_SeparateByPoi["nil"].reverse()
+    while len(Player_SeparateByPoi["nil"]) > 100:
+        Player_SeparateByPoi["nil"].pop()
+    fillOutTreeMode1(Player_SeparateByPoi)
+
+
 def calculateButtonFunction():
     mode = modeText.cget("text")
     if mode[-1] == "1":
         calculateMode_1()
     elif mode[-1] == "2":
         calculateMode_2()
+    elif mode[-1] == "3":
+        calculateMode_3()
+
+
+def showInfo():
+    msgbox.showinfo("说明", """
+模式1:
+给定可用负重，计算最大韧性的护甲搭配：
+给出一个从高到低排序的韧性列表，同一种韧性可能有多种护甲搭配组合。
+对于同韧性的不同搭配组合，按选择的抗性种类从高到低排序。
+（一般情况，韧性越高越好）
+模式2：
+给定负重和目标韧性值，计算出合适的护甲搭配：
+计算出搭配组合后，按照选择的抗性种类，抗性从高到低排序。
+（适用于特定规则下限制韧性或只堆韧到韧性质变点）
+
+以上两种模式都支持护甲自选功能：
+固定1到3个部位的护甲，进行以上两种最优化计算。
+在护甲搜索框内输入护甲全名，点击搜索获取护甲id，将护甲id输入对应的护甲id输入框中。
+默认值-1为不固定该部位护甲。
+
+模式3：
+给定负重情况下不考虑韧性，计算最高属性抗性套装：
+输出表格为选定抗性从高到低排序。
+    """)
+
+
+def openWeb():
+    webbrowser.open('https://github.com/Acquity2/EldenRingArmorOptimizer')
 
 
 '''
@@ -994,6 +1074,53 @@ canvas.create_rectangle(
     38.00000000000001,
     fill="#151515",
     outline="")
+
+button_7 = ttk.Button(
+    text="说明",
+    command=lambda: showInfo(),
+    bootstyle="info-outline"
+)
+
+button_7.place(
+    x=265,
+    y=529.0,
+    width=60.0,
+    height=24.0,
+
+)
+
+
+button_8 = ttk.Button(
+    text="https://github.com/Acquity2/EldenRingArmorOptimizer",
+    command=lambda: openWeb(),
+    style="link-light"
+)
+
+button_8.place(
+    x=339, y=540,
+    width=785.0,
+    height=26.0,
+)
+
+canvas.create_rectangle(
+    353.9999999999999,
+    537.0,
+    1108.9999999999999,
+    540.0,
+    fill="#515151",
+    outline="")
+"""
+someInfo = ttk.Label(
+    anchor="nw",
+    text="""
+
+"""
+    font=("Source Sans 3", 12 * -1),
+    background="#303030",
+    foreground="#979797",
+)
+someInfo.place(x=500, y=50)
+"""
 
 window.resizable(False, False)
 window.mainloop()

@@ -14,6 +14,10 @@ HelmList = {}
 ChestList = {}
 GauntletList = {}
 LegList = {}
+HelmList_ = {}
+ChestList_ = {}
+GauntletList_ = {}
+LegList_ = {}
 
 HelmList_SortByPoiPerWgt = {}
 ChestList_SortByPoiPerWgt = {}
@@ -415,15 +419,125 @@ print("头盔总数：", len(HelmList), "胸甲总数：", len(ChestList), "手�
 # _Helm[2].showAll()
 
 # 按韧重比排序
-HelmList_SortByPoiPerWgt = copyArr(HelmList)
-ChestList_SortByPoiPerWgt = copyArr(ChestList)
-GauntletList_SortByPoiPerWgt = copyArr(GauntletList)
-LegList_SortByPoiPerWgt = copyArr(LegList)
+HelmList_SortByPoiPerWgt = HelmList.copy()
+ChestList_SortByPoiPerWgt = ChestList.copy()
+GauntletList_SortByPoiPerWgt = GauntletList.copy()
+LegList_SortByPoiPerWgt = LegList.copy()
 
 HelmList_SortByPoiPerWgt = PoiPerWgtInsertionSort(HelmList_SortByPoiPerWgt)
 ChestList_SortByPoiPerWgt = PoiPerWgtInsertionSort(ChestList_SortByPoiPerWgt)
 GauntletList_SortByPoiPerWgt = PoiPerWgtInsertionSort(GauntletList_SortByPoiPerWgt)
 LegList_SortByPoiPerWgt = PoiPerWgtInsertionSort(LegList_SortByPoiPerWgt)
+
+HelmList_["SortByPhy"] = HelmList.copy()
+ChestList_["SortByPhy"] = ChestList.copy()
+GauntletList_["SortByPhy"] = GauntletList.copy()
+LegList_["SortByPhy"] = LegList.copy()
+
+HelmList_["SortByPhy"] = PhyInsertionSort(HelmList_["SortByPhy"])
+ChestList_["SortByPhy"] = PhyInsertionSort(ChestList_["SortByPhy"])
+GauntletList_["SortByPhy"] = PhyInsertionSort(GauntletList_["SortByPhy"])
+LegList_["SortByPhy"] = PhyInsertionSort(LegList_["SortByPhy"])
+
+HelmList_["SortByVSStr"] = HelmList.copy()
+ChestList_["SortByVSStr"] = ChestList.copy()
+GauntletList_["SortByVSStr"] = GauntletList.copy()
+LegList_["SortByVSStr"] = LegList.copy()
+
+HelmList_["SortByVSStr"] = VSStrInsertionSort(HelmList_["SortByVSStr"])
+ChestList_["SortByVSStr"] = VSStrInsertionSort(ChestList_["SortByVSStr"])
+GauntletList_["SortByVSStr"] = VSStrInsertionSort(GauntletList_["SortByVSStr"])
+LegList_["SortByVSStr"] = VSStrInsertionSort(LegList_["SortByVSStr"])
+
+HelmList_["SortByVSSla"] = HelmList.copy()
+ChestList_["SortByVSSla"] = ChestList.copy()
+GauntletList_["SortByVSSla"] = GauntletList.copy()
+LegList_["SortByVSSla"] = LegList.copy()
+
+HelmList_["SortByVSSla"] = VSSlaInsertionSort(HelmList_["SortByVSSla"])
+ChestList_["SortByVSSla"] = VSSlaInsertionSort(ChestList_["SortByVSSla"])
+GauntletList_["SortByVSSla"] = VSSlaInsertionSort(GauntletList_["SortByVSSla"])
+LegList_["SortByVSSla"] = VSSlaInsertionSort(LegList_["SortByVSSla"])
+
+HelmList_["SortByVSPie"] = HelmList.copy()
+ChestList_["SortByVSPie"] = ChestList.copy()
+GauntletList_["SortByVSPie"] = GauntletList.copy()
+LegList_["SortByVSPie"] = LegList.copy()
+
+HelmList_["SortByVSPie"] = VSPieInsertionSort(HelmList_["SortByVSPie"])
+ChestList_["SortByVSPie"] = VSPieInsertionSort(ChestList_["SortByVSPie"])
+GauntletList_["SortByVSPie"] = VSPieInsertionSort(GauntletList_["SortByVSPie"])
+LegList_["SortByVSPie"] = VSPieInsertionSort(LegList_["SortByVSPie"])
+
+HelmList_["SortByMag"] = HelmList.copy()
+ChestList_["SortByMag"] = ChestList.copy()
+GauntletList_["SortByMag"] = GauntletList.copy()
+LegList_["SortByMag"] = LegList.copy()
+
+HelmList_["SortByMag"] = MagInsertionSort(HelmList_["SortByMag"])
+ChestList_["SortByMag"] = MagInsertionSort(ChestList_["SortByMag"])
+GauntletList_["SortByMag"] = MagInsertionSort(GauntletList_["SortByMag"])
+LegList_["SortByMag"] = MagInsertionSort(LegList_["SortByMag"])
+
+HelmList_["SortByFir"] = HelmList.copy()
+ChestList_["SortByFir"] = ChestList.copy()
+GauntletList_["SortByFir"] = GauntletList.copy()
+LegList_["SortByFir"] = LegList.copy()
+
+HelmList_["SortByFir"] = FirInsertionSort(HelmList_["SortByFir"])
+ChestList_["SortByFir"] = FirInsertionSort(ChestList_["SortByFir"])
+GauntletList_["SortByFir"] = FirInsertionSort(GauntletList_["SortByFir"])
+LegList_["SortByFir"] = FirInsertionSort(LegList_["SortByFir"])
+
+HelmList_["SortByLit"] = HelmList.copy()
+ChestList_["SortByLit"] = ChestList.copy()
+GauntletList_["SortByLit"] = GauntletList.copy()
+LegList_["SortByLit"] = LegList.copy()
+
+HelmList_["SortByLit"] = LitInsertionSort(HelmList_["SortByLit"])
+ChestList_["SortByLit"] = LitInsertionSort(ChestList_["SortByLit"])
+GauntletList_["SortByLit"] = LitInsertionSort(GauntletList_["SortByLit"])
+LegList_["SortByLit"] = LitInsertionSort(LegList_["SortByLit"])
+
+HelmList_["SortByHol"] = HelmList.copy()
+ChestList_["SortByHol"] = ChestList.copy()
+GauntletList_["SortByHol"] = GauntletList.copy()
+LegList_["SortByHol"] = LegList.copy()
+
+HelmList_["SortByHol"] = HolInsertionSort(HelmList_["SortByHol"])
+ChestList_["SortByHol"] = HolInsertionSort(ChestList_["SortByHol"])
+GauntletList_["SortByHol"] = HolInsertionSort(GauntletList_["SortByHol"])
+LegList_["SortByHol"] = HolInsertionSort(LegList_["SortByHol"])
+
+HelmList_["SortByImm"] = HelmList.copy()
+ChestList_["SortByImm"] = ChestList.copy()
+GauntletList_["SortByImm"] = GauntletList.copy()
+LegList_["SortByImm"] = LegList.copy()
+
+HelmList_["SortByImm"] = ImmInsertionSort(HelmList_["SortByImm"])
+ChestList_["SortByImm"] = ImmInsertionSort(ChestList_["SortByImm"])
+GauntletList_["SortByImm"] = ImmInsertionSort(GauntletList_["SortByImm"])
+LegList_["SortByImm"] = ImmInsertionSort(LegList_["SortByImm"])
+
+HelmList_["SortByRobu"] = HelmList.copy()
+ChestList_["SortByRobu"] = ChestList.copy()
+GauntletList_["SortByRobu"] = GauntletList.copy()
+LegList_["SortByRobu"] = LegList.copy()
+
+HelmList_["SortByRobu"] = RobuInsertionSort(HelmList_["SortByRobu"])
+ChestList_["SortByRobu"] = RobuInsertionSort(ChestList_["SortByRobu"])
+GauntletList_["SortByRobu"] = RobuInsertionSort(GauntletList_["SortByRobu"])
+LegList_["SortByRobu"] = RobuInsertionSort(LegList_["SortByRobu"])
+
+HelmList_["SortByFoc"] = HelmList.copy()
+ChestList_["SortByFoc"] = ChestList.copy()
+GauntletList_["SortByFoc"] = GauntletList.copy()
+LegList_["SortByFoc"] = LegList.copy()
+
+HelmList_["SortByFoc"] = FocInsertionSort(HelmList_["SortByFoc"])
+ChestList_["SortByFoc"] = FocInsertionSort(ChestList_["SortByFoc"])
+GauntletList_["SortByFoc"] = FocInsertionSort(GauntletList_["SortByFoc"])
+LegList_["SortByFoc"] = FocInsertionSort(LegList_["SortByFoc"])
 
 '''玩家护甲输入
 player1 = PlayerResistance(1, HelmList, 3, ChestList, 2, GauntletList, 4, LegList)
@@ -456,7 +570,7 @@ def calculateWeight(_maxWeight, _currentWeight, _ratio):  # 计算可用负重
 def fixWeightFindMaxPoi(weight, fixTerm):  # 指定重量最大韧性
     key = 0
     _searchRange = 89
-    _TmpPlayerList = {}
+    _TmpPlayerList = []
     _playerLimit = 13000
     for ChestKey in range(-len(ChestList_SortByPoiPerWgt) + 1, 0):
         if fixTerm["chest"] != -1 and ChestKey != -fixTerm["chest"]:
@@ -474,14 +588,38 @@ def fixWeightFindMaxPoi(weight, fixTerm):  # 指定重量最大韧性
                               GauntletList_SortByPoiPerWgt[-GauntletKey].Wgt + LegList_SortByPoiPerWgt[-LegKey].Wgt
                     _poi = HelmList_SortByPoiPerWgt[-HelmKey].Poi + ChestList_SortByPoiPerWgt[-ChestKey].Poi + \
                            GauntletList_SortByPoiPerWgt[-GauntletKey].Poi + LegList_SortByPoiPerWgt[-LegKey].Poi
-                    if weight >= _weight >= weight - 5:
+                    if weight >= _weight >= weight * 0.95:
                         _TmpPlayer = PlayerResistance(
                             -HelmKey, HelmList_SortByPoiPerWgt,
                             -ChestKey, ChestList_SortByPoiPerWgt,
                             -GauntletKey, GauntletList_SortByPoiPerWgt,
                             -LegKey, LegList_SortByPoiPerWgt
                         )
-                        _TmpPlayerList[key] = _TmpPlayer
+                        _TmpPlayerList.append(_TmpPlayer)
+                        key = key + 1
+                    if key >= _playerLimit:
+                        return _TmpPlayerList
+    return _TmpPlayerList
+
+
+def fixWeightFindMaxAbs(weight, sortKey):  # 指定重量最大韧性
+    key = 0
+    _TmpPlayerList = []
+    _playerLimit = 13000
+    for ChestKey in range(-len(HelmList_[sortKey]) + 1, 0):
+        for LegKey in range(-len(LegList_[sortKey]) + 1, 0):
+            for GauntletKey in range(-len(GauntletList_[sortKey]) + 1, 0):
+                for HelmKey in range(-len(HelmList_[sortKey]) + 1, 0):
+                    _weight = HelmList_[sortKey][-HelmKey].Wgt + ChestList_[sortKey][-ChestKey].Wgt + \
+                              GauntletList_[sortKey][-GauntletKey].Wgt + LegList_[sortKey][-LegKey].Wgt
+                    if weight >= _weight >= weight - 10:
+                        _TmpPlayer = PlayerResistance(
+                            -HelmKey, HelmList_SortByPoiPerWgt,
+                            -ChestKey, ChestList_SortByPoiPerWgt,
+                            -GauntletKey, GauntletList_SortByPoiPerWgt,
+                            -LegKey, LegList_SortByPoiPerWgt
+                        )
+                        _TmpPlayerList.append(_TmpPlayer)
                         key = key + 1
                     if key >= _playerLimit:
                         return _TmpPlayerList
@@ -491,7 +629,7 @@ def fixWeightFindMaxPoi(weight, fixTerm):  # 指定重量最大韧性
 def fixWeightPoiFindMaxAbs(weight, fixTerm, tgtPoi):  # 指定重量最大韧性
     key = 0
     _searchRange = 89
-    _TmpPlayerList = {}
+    _TmpPlayerList = []
     _playerLimit = 3000
     count = 0
     count1 = 0
@@ -518,7 +656,7 @@ def fixWeightPoiFindMaxAbs(weight, fixTerm, tgtPoi):  # 指定重量最大韧性
                             -GauntletKey, GauntletList_SortByPoiPerWgt,
                             -LegKey, LegList_SortByPoiPerWgt
                         )
-                        _TmpPlayerList[key] = _TmpPlayer
+                        _TmpPlayerList.append(_TmpPlayer)
                         key = key + 1
                         count1 = count
                     if count > 46372560:
@@ -651,6 +789,18 @@ def calculateMod2(_totalWeight, _weaponAndRing, _ratio, _FixTerm, _tgtPoi):
     print(len(Player))
     PoiInsertionSort(Player)
     return separateByPoi(Player)
+
+
+def calculateMod3(_totalWeight, _weaponAndRing, _ratio, sortKey):
+    # totalWeight = 77.8
+    # weaponAndRing = 14.7
+    # ratio = 0.699
+    '''计算并显示负重前五'''
+    Weight = calculateWeight(_totalWeight, _weaponAndRing, _ratio)
+    Player = fixWeightFindMaxAbs(Weight, sortKey)
+    if len(Player) == 0:
+        return -1
+    return Player
 
 
 '''
