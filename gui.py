@@ -22,6 +22,7 @@ pyglet.font.load("SourceSans3-Regular.ttf")
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
 
+Version = "Ver 0.1.2"
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
@@ -147,6 +148,16 @@ canvas.create_text(
     fill="#FCFCFC",
     font=("Source Sans 3", 14 * -1)
 )
+
+canvas.create_text(
+    200,
+    55.0,
+    anchor="nw",
+    text=Version,
+    fill="#aaaaaa",
+    font=("Source Sans 3", 12 * -1)
+)
+
 
 canvas.create_text(
     493.9999999999999,
@@ -839,7 +850,9 @@ def fillOutTreeMode1(doubleList):
                                                                  "\n理智度：" + str(round(doubleList[k][i].Foc, 3)) +
                                                                  "\n抗死度：" + str(round(doubleList[k][i].Vita, 3)) +
                                                                  "\n韧性：" + str(round(doubleList[k][i].Poi, 3)) +
-                                                                 "\n韧重比：" + str(round(doubleList[k][i].PoiPerWgt, 3))
+                                                                 "\n韧重比：" + str(round(doubleList[k][i].PoiPerWgt, 3)) +
+                                                                 "\n实际韧性：" + str(round(doubleList[k][i].Poi, 3)/10) +
+                                                                 "\n实际韧性为游戏内部计算时使用值"
                                                                  ])
 
 
