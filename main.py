@@ -363,6 +363,18 @@ def FocInsertionSort(arr1):  # 理智排序
     return arr2
 
 
+def WgtInsertionSort(arr1):  # 理智排序
+    arr2 = arr1
+    for arrI in range(1, len(arr2)):
+        key = arr2[arrI]
+        j = arrI - 1
+        while j >= 0 and key.Wgt < arr2[j].Wgt:
+            arr2[j + 1] = arr2[j]
+            j -= 1
+        arr2[j + 1] = key
+    return arr2
+
+
 def getArmorID(name, armorList):
     for i in range(0, len(armorList)):
         if armorList[i].Name == name:
@@ -567,11 +579,16 @@ def calculateWeight(_maxWeight, _currentWeight, _ratio):  # 计算可用负重
     return _maxWeight * _ratio - _currentWeight
 
 
-def fixWeightFindMaxPoi(weight, fixTerm):  # 指定重量最大韧性
+def fixWeightFindMaxPoi(weight, fixTerm,percent):  # 指定重量最大韧性
     key = 0
     _searchRange = 89
     _TmpPlayerList = []
     _playerLimit = 13000
+    if percent >=0.55:
+        limit = 0.95
+    else:
+        limit = 0
+        _playerLimit = 200
     for ChestKey in range(-len(ChestList_SortByPoiPerWgt) + 1, 0):
         if fixTerm["chest"] != -1 and ChestKey != -fixTerm["chest"]:
             continue
@@ -588,11 +605,11 @@ def fixWeightFindMaxPoi(weight, fixTerm):  # 指定重量最大韧性
                               GauntletList_SortByPoiPerWgt[-GauntletKey].Wgt + LegList_SortByPoiPerWgt[-LegKey].Wgt
                     _poi = HelmList_SortByPoiPerWgt[-HelmKey].Poi + ChestList_SortByPoiPerWgt[-ChestKey].Poi + \
                            GauntletList_SortByPoiPerWgt[-GauntletKey].Poi + LegList_SortByPoiPerWgt[-LegKey].Poi
-                    if weight >= _weight >= weight * 0.95:
+                    if weight >= _weight >= weight * limit:
                         _TmpPlayer = PlayerResistance(
                             -HelmKey, HelmList_SortByPoiPerWgt,
                             -ChestKey, ChestList_SortByPoiPerWgt,
-                            -GauntletKey, GauntletList_SortByPoiPerWgt,
+                                -GauntletKey, GauntletList_SortByPoiPerWgt,
                             -LegKey, LegList_SortByPoiPerWgt
                         )
                         _TmpPlayerList.append(_TmpPlayer)
@@ -694,7 +711,7 @@ def testfunction():
 
     '''计算并显示负重前五'''
     Weight = calculateWeight(totalWeight, weaponAndRing, ratio)
-    Player = fixWeightFindMaxPoi(Weight, FixTerm)
+    Player = fixWeightFindMaxPoi(Weight, FixTerm, ratio)
     print(len(Player))
     PoiInsertionSort(Player)
     Player_SeparateByPoi = separateByPoi(Player)
@@ -728,8 +745,8 @@ def testfunction():
 
 def testfunction2():
     totalWeight = 50
-    weaponAndRing = 17.2
-    ratio = 0.699
+    weaponAndRing = 10
+    ratio = 0.299
     tgtPoi = 25
     Weight = calculateWeight(totalWeight, weaponAndRing, ratio)
     Player = fixWeightPoiFindMaxAbs(Weight, FixTerm, tgtPoi)
@@ -755,6 +772,33 @@ def testfunction2():
                   "\n###############################################")
 
 
+def testfunction3():
+    HelmList_SortByWgt = HelmList.copy()
+    ChestList_SortByWgt = ChestList.copy()
+    GauntletList_SortByWgt = GauntletList.copy()
+    LegList_SortByWgt = LegList.copy()
+
+    HelmList_SortByWgt = WgtInsertionSort(HelmList_SortByWgt)
+    ChestList_SortByWgt = WgtInsertionSort(ChestList_SortByWgt)
+    GauntletList_SortWgt = WgtInsertionSort(GauntletList_SortByWgt)
+    LegList_SortByWgt = WgtInsertionSort(LegList_SortByWgt)
+
+    print(HelmList_SortByWgt[0].Name, HelmList_SortByWgt[0].Wgt)
+    print(ChestList_SortByWgt[0].Name, ChestList_SortByWgt[0].Wgt)
+    print(GauntletList_SortWgt[0].Name, GauntletList_SortWgt[0].Wgt)
+    print(LegList_SortByWgt[0].Name, LegList_SortByWgt[0].Wgt)
+
+def testfunction4():
+    for i in range(-len(ChestList_SortByPoiPerWgt)+1,-len(ChestList_SortByPoiPerWgt)+8):
+        print(ChestList_SortByPoiPerWgt[-i].Name,ChestList_SortByPoiPerWgt[-i].PoiPerWgt)
+    for i in range(-len(HelmList_SortByPoiPerWgt)+1,-len(HelmList_SortByPoiPerWgt)+8):
+        print(HelmList_SortByPoiPerWgt[-i].Name,HelmList_SortByPoiPerWgt[-i].PoiPerWgt)
+    for i in range(-len(GauntletList_SortByPoiPerWgt)+1,-len(GauntletList_SortByPoiPerWgt)+8):
+        print(GauntletList_SortByPoiPerWgt[-i].Name,GauntletList_SortByPoiPerWgt[-i].PoiPerWgt)
+    for i in range(-len(LegList_SortByPoiPerWgt)+1,-len(LegList_SortByPoiPerWgt)+8):
+        print(LegList_SortByPoiPerWgt[-i].Name,LegList_SortByPoiPerWgt[-i].PoiPerWgt)
+
+
 """
     i = 0
     length = len(Player_SeparateByPoi[26])
@@ -771,7 +815,7 @@ def calculateMod1(_totalWeight, _weaponAndRing, _ratio, _FixTerm):
     # ratio = 0.699
     '''计算并显示负重前五'''
     Weight = calculateWeight(_totalWeight, _weaponAndRing, _ratio)
-    Player = fixWeightFindMaxPoi(Weight, _FixTerm)
+    Player = fixWeightFindMaxPoi(Weight, _FixTerm, _ratio)
     print(len(Player))
     PoiInsertionSort(Player)
     return separateByPoi(Player)

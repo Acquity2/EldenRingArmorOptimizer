@@ -913,6 +913,9 @@ def calculateMode_1():
     _ratio = getWgtPercent()
     getFixTerm(FixTerm)
     Player_SeparateByPoi = main.calculateMod1(_totalWeight, _weaponAndRing, _ratio, FixTerm)
+    if len(Player_SeparateByPoi) == 0:
+        msgbox.showinfo("警告", "无法根据输入数据找到护甲组合！\n请更换数据后尝试!")
+        return
     sortID = selectedAbs.get()
     sort(Player_SeparateByPoi, sortID)
     for k in Player_SeparateByPoi:
