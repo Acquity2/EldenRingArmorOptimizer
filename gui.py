@@ -27,11 +27,76 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
+zh_cn = {
+    "title":"艾尔登法环护甲计算器",
+    1:"胸甲ID",
+    2:"头盔ID",
+    3:"护手ID",
+    4:"腿甲ID",
+    5:"最大负重：",
+    6:"当前负重：",
+    7:"目标韧性：",
+    8:"最大70%负重",
+    9:"最大30%负重",
+    10:"最大                        %负重 ",
+    11: "护甲ID搜索",
+    12:"排序选项",
+    14:"物理(普通)抗性",
+    15:"打击抗性",
+    16:'斩击抗性',
+    17:'突刺抗性',
+    18:"魔抗性",
+    19:"火抗性",
+    20:'雷抗性',
+    21:'圣抗性',
+    22:'免疫',
+    23:'健壮',
+    24:'理智',
+    25:"韧性",
+    26:"护甲搭配组合"
+
+}
+
+
+en_us = {
+    "title":"Elden Ring Armor Optimizer",
+    1:"Chest ID",
+    2:"Helm ID",
+    3:"Gauntlet ID",
+    4:"Leg ID",
+    5:"MAX Wgt.:",
+    6:"Current Wgt.:",
+    7:"Tgt Poi.:",
+    8:"Up to 70% Burden",
+    9:"Up to 30% Burden",
+    10:"Up to                        % Burden ",
+    11:"Armor Finder",
+    12:"Sort By",
+    14:"Phy.Abs.",
+    15:"VSStr.Abs.",
+    16:'VSSla.Abs.',
+    17:'VSPie.Abs.',
+    18:"Mag.Abs.",
+    19:"Fir.Abs.",
+    20:'Lit.Abs.',
+    21:'Hol.Abs',
+    22:'Imm.',
+    23:'Robu.',
+    24:'Foc.',
+    25:"Poise",
+    26:"Armor Sets"
+
+}
+
+languageSet = zh_cn
+
+
+
 FixTerm = {"helm": -1, "chest": -1, "gauntlet": -1, "leg": -1}
 TreeDir = {}
 currentMode = 1
 window = Tk()
-window.title("艾尔登法环护甲计算器")
+window.title(languageSet["title"])
 
 window.geometry("1125x566")
 window.configure(bg="#252525")
@@ -87,7 +152,7 @@ canvas.create_text(
     493.9999999999999,
     50.00000000000001,
     anchor="nw",
-    text="胸甲ID",
+    text=languageSet[1],
     fill="#979797",
     font=("Source Sans 3", 16 * -1)
 )
@@ -96,7 +161,7 @@ canvas.create_text(
     353.9999999999999,
     50.00000000000001,
     anchor="nw",
-    text="头盔ID",
+    text=languageSet[2],
     fill="#979797",
     font=("Source Sans 3", 16 * -1)
 )
@@ -339,7 +404,7 @@ canvas.create_text(
     633.9999999999999,
     51.00000000000001,
     anchor="nw",
-    text="腿甲ID",
+    text=languageSet[4],
     fill="#979797",
     font=("Almarai Regular", 16 * -1)
 )
@@ -348,7 +413,7 @@ canvas.create_text(
     774.9999999999999,
     51.00000000000001,
     anchor="nw",
-    text="手套ID",
+    text=languageSet[3],
     fill="#979797",
     font=("Almarai Regular", 16 * -1)
 )
@@ -357,7 +422,7 @@ canvas.create_text(
     12.999999999999886,
     205.0,
     anchor="nw",
-    text="MAX Wgt.:",
+    text=languageSet[5],
     fill="#979797",
     font=("Source Sans 3", 16 * -1)
 )
@@ -366,7 +431,7 @@ canvas.create_text(
     40.999999999999886,
     147.0,
     anchor="nw",
-    text="Up to                        % Burden ",
+    text=languageSet[10],
     fill="#979797",
     font=("Source Sans 3", 16 * -1)
 )
@@ -375,7 +440,7 @@ canvas.create_text(
     40.999999999999886,
     101.0,
     anchor="nw",
-    text="Up to 70% Burden",
+    text=languageSet[8],
     fill="#979797",
     font=("Source Sans 3", 16 * -1)
 )
@@ -384,7 +449,7 @@ canvas.create_text(
     40.999999999999886,
     124.0,
     anchor="nw",
-    text="Up to 30% Burden",
+    text=languageSet[9],
     fill="#979797",
     font=("Source Sans 3", 16 * -1)
 )
@@ -393,7 +458,7 @@ canvas.create_text(
     353.9999999999999,
     18.000000000000007,
     anchor="nw",
-    text="Armor Finder",
+    text=languageSet[11],
     fill="#979797",
     font=("Source Sans 3", 16 * -1)
 )
@@ -402,7 +467,7 @@ canvas.create_text(
     12.999999999999886,
     232.0,
     anchor="nw",
-    text="Current Wgt.:",
+    text=languageSet[6],
     fill="#979797",
     font=("Source Sans 3", 16 * -1)
 )
@@ -411,7 +476,7 @@ canvas.create_text(
     12.999999999999886,
     259.0,
     anchor="nw",
-    text="Tgt Poi.:",
+    text=languageSet[7],
     fill="#979797",
     font=("Source Sans 3", 16 * -1)
 )
@@ -420,7 +485,7 @@ canvas.create_text(
     12.999999999999886,
     316.0,
     anchor="nw",
-    text="Sort By",
+    text=languageSet[12],
     fill="#979797",
     font=("Source Sans 3", 16 * -1)
 )
@@ -432,114 +497,6 @@ image_1 = canvas.create_image(
     430.0,
     image=image_image_1
 )
-
-"""canvas.create_text(
-    64.99999999999989,
-    351.0,
-    anchor="nw",
-    text="Even",
-    fill="#979797",
-    font=("Source Sans 3", 16 * -1)
-)
-
-canvas.create_text(
-    64.99999999999989,
-    378.0,
-    anchor="nw",
-    text="Even ",
-    fill="#979797",
-    font=("Source Sans 3", 16 * -1)
-)
-
-canvas.create_text(
-    64.99999999999989,
-    405.0,
-    anchor="nw",
-    text="Even ",
-    fill="#979797",
-    font=("Source Sans 3", 16 * -1)
-)
-
-canvas.create_text(
-    64.99999999999989,
-    432.0,
-    anchor="nw",
-    text="Even ",
-    fill="#979797",
-    font=("Source Sans 3", 16 * -1)
-)
-
-canvas.create_text(
-    64.99999999999989,
-    459.0,
-    anchor="nw",
-    text="Even ",
-    fill="#979797",
-    font=("Source Sans 3", 16 * -1)
-)
-
-canvas.create_text(
-    64.99999999999989,
-    486.0,
-    anchor="nw",
-    text="Even ",
-    fill="#979797",
-    font=("Source Sans 3", 16 * -1)
-)
-
-canvas.create_text(
-    188.9999999999999,
-    352.0,
-    anchor="nw",
-    text="Even",
-    fill="#979797",
-    font=("Source Sans 3", 16 * -1)
-)
-
-canvas.create_text(
-    188.9999999999999,
-    379.0,
-    anchor="nw",
-    text="Even ",
-    fill="#979797",
-    font=("Source Sans 3", 16 * -1)
-)
-
-canvas.create_text(
-    188.9999999999999,
-    406.0,
-    anchor="nw",
-    text="Even ",
-    fill="#979797",
-    font=("Source Sans 3", 16 * -1)
-)
-
-canvas.create_text(
-    188.9999999999999,
-    433.0,
-    anchor="nw",
-    text="Even ",
-    fill="#979797",
-    font=("Source Sans 3", 16 * -1)
-)
-
-canvas.create_text(
-    188.9999999999999,
-    460.0,
-    anchor="nw",
-    text="Even ",
-    fill="#979797",
-    font=("Source Sans 3", 16 * -1)
-)
-
-canvas.create_text(
-    188.9999999999999,
-    487.0,
-    anchor="nw",
-    text="Even ",
-    fill="#979797",
-    font=("Source Sans 3", 16 * -1)
-)"""
 
 button_image_1 = PhotoImage(
     file=relative_to_assets("button_1.png"))
@@ -648,17 +605,17 @@ button_6.place(
 )
 
 selectedAbs = tk.StringVar()
-Abss = (("Phy.Abs.", 1),
-        ("VSStr.Abs.", 2),
-        ('VSSla.Abs.', 3),
-        ('VSPie.Abs.', 4),
-        ("Mag.Abs.", 5),
-        ("Fir.Abs.", 6),
-        ('Lit.Abs.', 7),
-        ('Hol.Abs', 8),
-        ('Imm.', 9),
-        ('Robu.', 10),
-        ('Foc.', 11)
+Abss = ((languageSet[14], 1),
+        (languageSet[15], 2),
+        (languageSet[16], 3),
+        (languageSet[17], 4),
+        (languageSet[18], 5),
+        (languageSet[19], 6),
+        (languageSet[20], 7),
+        (languageSet[21], 8),
+        (languageSet[22], 9),
+        (languageSet[23], 10),
+        (languageSet[24], 11)
         )
 key = 0
 for size in Abss:
@@ -748,9 +705,9 @@ tree = ttk.Treeview(height=23,
                     columns=columns,
                     yscrollcommand=yscroll.set,
                     )
-tree.heading(column='#0', text='韧性', anchor=W,
+tree.heading(column='#0', text=languageSet[25], anchor=W,
              command=lambda: print('护甲搭配组合'))
-tree.heading(column='1', text='护甲搭配组合', anchor=W,
+tree.heading(column='1', text=languageSet[26], anchor=W,
              command=lambda: print('护甲搭配组合'))
 tree.column("#0", anchor="w", width=80)
 tree.column("1", anchor="w", width=660)
