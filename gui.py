@@ -6,7 +6,7 @@ from pathlib import Path
 
 # from tkinter import *
 # Explicit imports to satisfy Flake8
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, Label
 from tkinter.ttk import Scrollbar
 import tkinter.messagebox as msgbox
 import pyglet
@@ -22,76 +22,75 @@ pyglet.font.load("SourceSans3-Regular.ttf")
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
 
-Version = "Ver 0.1.2"
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
+Version = "Ver 0.1.3"
+
 zh_cn = {
-    "title":"艾尔登法环护甲计算器",
-    1:"胸甲ID",
-    2:"头盔ID",
-    3:"护手ID",
-    4:"腿甲ID",
-    5:"最大负重：",
-    6:"当前负重：",
-    7:"目标韧性：",
-    8:"最大70%负重",
-    9:"最大30%负重",
-    10:"最大                        %负重 ",
+    "title": "艾尔登法环护甲计算器",
+    1: "胸甲ID",
+    2: "头盔ID",
+    3: "护手ID",
+    4: "腿甲ID",
+    5: "最大负重：",
+    6: "当前负重：",
+    7: "目标韧性：",
+    8: "最大70%负重",
+    9: "最大30%负重",
+    10: "最大                        %负重 ",
     11: "护甲ID搜索",
-    12:"排序选项",
-    14:"物理(普通)抗性",
-    15:"打击抗性",
-    16:'斩击抗性',
-    17:'突刺抗性',
-    18:"魔抗性",
-    19:"火抗性",
-    20:'雷抗性',
-    21:'圣抗性',
-    22:'免疫',
-    23:'健壮',
-    24:'理智',
-    25:"韧性",
-    26:"护甲搭配组合"
+    12: "排序选项",
+    14: "物理(普通)抗性",
+    15: "打击抗性",
+    16: '斩击抗性',
+    17: '突刺抗性',
+    18: "魔抗性",
+    19: "火抗性",
+    20: '雷抗性',
+    21: '圣抗性',
+    22: '免疫',
+    23: '健壮',
+    24: '理智',
+    25: "韧性",
+    26: "护甲搭配组合",
+    27:"最低预期："
 
 }
 
-
 en_us = {
-    "title":"Elden Ring Armor Optimizer",
-    1:"Chest ID",
-    2:"Helm ID",
-    3:"Gauntlet ID",
-    4:"Leg ID",
-    5:"MAX Wgt.:",
-    6:"Current Wgt.:",
-    7:"Tgt Poi.:",
-    8:"Up to 70% Burden",
-    9:"Up to 30% Burden",
-    10:"Up to                        % Burden ",
-    11:"Armor Finder",
-    12:"Sort By",
-    14:"Phy.Abs.",
-    15:"VSStr.Abs.",
-    16:'VSSla.Abs.',
-    17:'VSPie.Abs.',
-    18:"Mag.Abs.",
-    19:"Fir.Abs.",
-    20:'Lit.Abs.',
-    21:'Hol.Abs',
-    22:'Imm.',
-    23:'Robu.',
-    24:'Foc.',
-    25:"Poise",
-    26:"Armor Sets"
-
+    "title": "Elden Ring Armor Optimizer",
+    1: "Chest ID",
+    2: "Helm ID",
+    3: "Gauntlet ID",
+    4: "Leg ID",
+    5: "MAX Wgt.:",
+    6: "Current Wgt.:",
+    7: "Tgt Poi.:",
+    8: "Up to 70% Burden",
+    9: "Up to 30% Burden",
+    10: "Up to                        % Burden ",
+    11: "Armor Finder",
+    12: "Sort By",
+    14: "Phy.Abs.",
+    15: "VSStr.Abs.",
+    16: 'VSSla.Abs.',
+    17: 'VSPie.Abs.',
+    18: "Mag.Abs.",
+    19: "Fir.Abs.",
+    20: 'Lit.Abs.',
+    21: 'Hol.Abs',
+    22: 'Imm.',
+    23: 'Robu.',
+    24: 'Foc.',
+    25: "Poise",
+    26: "Armor Sets",
+    27:"Min.Ep.Wgt."
 }
 
 languageSet = zh_cn
-
-
 
 FixTerm = {"helm": -1, "chest": -1, "gauntlet": -1, "leg": -1}
 TreeDir = {}
@@ -158,7 +157,6 @@ canvas.create_text(
     font=("Source Sans 3", 12 * -1)
 )
 
-
 canvas.create_text(
     493.9999999999999,
     50.00000000000001,
@@ -176,7 +174,7 @@ canvas.create_text(
     fill="#979797",
     font=("Source Sans 3", 16 * -1)
 )
-
+'''
 entry_image_1 = PhotoImage(
     file=relative_to_assets("entry_1.png"))
 entry_bg_1 = canvas.create_image(
@@ -184,6 +182,7 @@ entry_bg_1 = canvas.create_image(
     60.00000000000001,
     image=entry_image_1
 )
+'''
 HeadIDInputEntry = Entry(
     bd=0,
     bg="#383838",
@@ -196,7 +195,7 @@ HeadIDInputEntry.place(
     width=74.0,
     height=18.0
 )
-
+'''
 entry_image_2 = PhotoImage(
     file=relative_to_assets("entry_2.png"))
 entry_bg_2 = canvas.create_image(
@@ -204,6 +203,7 @@ entry_bg_2 = canvas.create_image(
     60.00000000000001,
     image=entry_image_2
 )
+'''
 ChestIDInputEntry = Entry(
     bd=0,
     bg="#383838",
@@ -216,7 +216,7 @@ ChestIDInputEntry.place(
     width=74.0,
     height=18.0
 )
-
+'''
 entry_image_3 = PhotoImage(
     file=relative_to_assets("entry_3.png"))
 entry_bg_3 = canvas.create_image(
@@ -224,6 +224,7 @@ entry_bg_3 = canvas.create_image(
     60.00000000000001,
     image=entry_image_3
 )
+'''
 LegIDInputEntry = Entry(
     bd=0,
     bg="#383838",
@@ -236,7 +237,7 @@ LegIDInputEntry.place(
     width=74.0,
     height=18.0
 )
-
+'''
 entry_image_4 = PhotoImage(
     file=relative_to_assets("entry_4.png"))
 entry_bg_4 = canvas.create_image(
@@ -244,6 +245,7 @@ entry_bg_4 = canvas.create_image(
     60.00000000000001,
     image=entry_image_4
 )
+'''
 GauntletIDInputEntry = Entry(
     bd=0,
     bg="#383838",
@@ -256,7 +258,7 @@ GauntletIDInputEntry.place(
     width=74.0,
     height=18.0
 )
-
+'''
 entry_image_5 = PhotoImage(
     file=relative_to_assets("entry_5.png"))
 entry_bg_5 = canvas.create_image(
@@ -264,6 +266,7 @@ entry_bg_5 = canvas.create_image(
     28.000000000000007,
     image=entry_image_5
 )
+'''
 armorIDOutputEntry = Entry(
     bd=0,
     bg="#383838",
@@ -275,7 +278,7 @@ armorIDOutputEntry.place(
     width=74.0,
     height=18.0
 )
-
+'''
 entry_image_6 = PhotoImage(
     file=relative_to_assets("entry_6.png"))
 entry_bg_6 = canvas.create_image(
@@ -283,6 +286,7 @@ entry_bg_6 = canvas.create_image(
     28.000000000000007,
     image=entry_image_6
 )
+'''
 armorNameInputEntry = Entry(
     bd=0,
     bg="#383838",
@@ -294,7 +298,7 @@ armorNameInputEntry.place(
     width=274.0,
     height=18.0
 )
-
+'''
 entry_image_7 = PhotoImage(
     file=relative_to_assets("entry_7.png"))
 entry_bg_7 = canvas.create_image(
@@ -302,6 +306,7 @@ entry_bg_7 = canvas.create_image(
     215.0,
     image=entry_image_7
 )
+'''
 MaxWgtInputEntry = Entry(
     bd=0,
     bg="#383838",
@@ -309,11 +314,26 @@ MaxWgtInputEntry = Entry(
 )
 MaxWgtInputEntry.place(
     x=103.99999999999989,
-    y=205.0,
+    y=191.0,
     width=211.0,
     height=18.0
 )
 
+LstWgtInputEntry = Entry(
+    bd=0,
+    bg="#383838",
+    highlightthickness=0
+)
+LstWgtInputEntry.insert(0, "-1")
+LstWgtInputEntry.place(
+    x=103.99999999999989,
+    y=218.0,
+    width=211.0,
+    height=18.0
+)
+
+
+'''
 entry_image_8 = PhotoImage(
     file=relative_to_assets("entry_8.png"))
 entry_bg_8 = canvas.create_image(
@@ -321,6 +341,7 @@ entry_bg_8 = canvas.create_image(
     157.0,
     image=entry_image_8
 )
+'''
 entry_8 = Entry(
     bd=0,
     bg="#383838",
@@ -332,7 +353,7 @@ entry_8.place(
     width=63.0,
     height=18.0
 )
-
+'''
 entry_image_9 = PhotoImage(
     file=relative_to_assets("entry_9.png"))
 entry_bg_9 = canvas.create_image(
@@ -340,6 +361,7 @@ entry_bg_9 = canvas.create_image(
     269.0,
     image=entry_image_9
 )
+'''
 PoiInputEntry = Entry(
     bd=0,
     bg="#383838",
@@ -347,11 +369,11 @@ PoiInputEntry = Entry(
 )
 PoiInputEntry.place(
     x=103.99999999999989,
-    y=259.0,
+    y=273.0,
     width=211.0,
     height=18.0
 )
-
+'''
 entry_image_10 = PhotoImage(
     file=relative_to_assets("entry_10.png"))
 entry_bg_10 = canvas.create_image(
@@ -359,6 +381,7 @@ entry_bg_10 = canvas.create_image(
     242.0,
     image=entry_image_10
 )
+'''
 CurrentWgtInputEntry = Entry(
     bd=0,
     bg="#383838",
@@ -366,7 +389,7 @@ CurrentWgtInputEntry = Entry(
 )
 CurrentWgtInputEntry.place(
     x=103.99999999999989,
-    y=232.0,
+    y=246.0,
     width=211.0,
     height=18.0
 )
@@ -417,7 +440,7 @@ canvas.create_text(
     anchor="nw",
     text=languageSet[4],
     fill="#979797",
-    font=("Almarai Regular", 16 * -1)
+    font=("Source Sans 3", 16 * -1)
 )
 
 canvas.create_text(
@@ -426,14 +449,23 @@ canvas.create_text(
     anchor="nw",
     text=languageSet[3],
     fill="#979797",
-    font=("Almarai Regular", 16 * -1)
+    font=("Source Sans 3", 16 * -1)
 )
 
 canvas.create_text(
     12.999999999999886,
-    205.0,
+    190.0,
     anchor="nw",
     text=languageSet[5],
+    fill="#979797",
+    font=("Source Sans 3", 16 * -1)
+)
+
+canvas.create_text(
+    12.999999999999886,
+    218.0,
+    anchor="nw",
+    text=languageSet[27],
     fill="#979797",
     font=("Source Sans 3", 16 * -1)
 )
@@ -476,7 +508,7 @@ canvas.create_text(
 
 canvas.create_text(
     12.999999999999886,
-    232.0,
+    247.0,
     anchor="nw",
     text=languageSet[6],
     fill="#979797",
@@ -485,7 +517,7 @@ canvas.create_text(
 
 canvas.create_text(
     12.999999999999886,
-    259.0,
+    274.0,
     anchor="nw",
     text=languageSet[7],
     fill="#979797",
@@ -580,9 +612,7 @@ DebugButton = Button(
     borderwidth=0,
     highlightthickness=0,
     command=lambda:
-    printSomeThing()
-
-    ,
+    printSomeThing(),
     relief="flat"
 )
 DebugButton.place(
@@ -851,7 +881,7 @@ def fillOutTreeMode1(doubleList):
                                                                  "\n抗死度：" + str(round(doubleList[k][i].Vita, 3)) +
                                                                  "\n韧性：" + str(round(doubleList[k][i].Poi, 3)) +
                                                                  "\n韧重比：" + str(round(doubleList[k][i].PoiPerWgt, 3)) +
-                                                                 "\n实际韧性：" + str(round(doubleList[k][i].Poi, 3)/10) +
+                                                                 "\n实际韧性：" + str(round(doubleList[k][i].Poi, 3) / 10) +
                                                                  "\n实际韧性为游戏内部计算时使用值"
                                                                  ])
 
@@ -859,37 +889,37 @@ def fillOutTreeMode1(doubleList):
 def sort(playerList, sortID):
     if sortID == "1":
         for k in playerList:
-            playerList[k] = main.PhyInsertionSort(playerList[k])
+            playerList[k] = main.PhyTimSort(playerList[k])
     elif sortID == "2":
         for k in playerList:
-            playerList[k] = main.VSStrInsertionSort(playerList[k])
+            playerList[k] = main.VSStrTimSort(playerList[k])
     elif sortID == "3":
         for k in playerList:
-            playerList[k] = main.VSSlaInsertionSort(playerList[k])
+            playerList[k] = main.VSSlaTimSort(playerList[k])
     elif sortID == "4":
         for k in playerList:
-            playerList[k] = main.VSPieInsertionSort(playerList[k])
+            playerList[k] = main.VSPieTimSort(playerList[k])
     elif sortID == "5":
         for k in playerList:
-            playerList[k] = main.MagInsertionSort(playerList[k])
+            playerList[k] = main.MagTimSort(playerList[k])
     elif sortID == "6":
         for k in playerList:
-            playerList[k] = main.FirInsertionSort(playerList[k])
+            playerList[k] = main.FirTimSort(playerList[k])
     elif sortID == "7":
         for k in playerList:
-            playerList[k] = main.LitInsertionSort(playerList[k])
+            playerList[k] = main.LitTimSort(playerList[k])
     elif sortID == "8":
         for k in playerList:
-            playerList[k] = main.HolInsertionSort(playerList[k])
+            playerList[k] = main.HolTimSort(playerList[k])
     elif sortID == "9":
         for k in playerList:
-            playerList[k] = main.ImmInsertionSort(playerList[k])
+            playerList[k] = main.ImmTimSort(playerList[k])
     elif sortID == "10":
         for k in playerList:
-            playerList[k] = main.RobuInsertionSort(playerList[k])
+            playerList[k] = main.RobuTimSort(playerList[k])
     elif sortID == "11":
         for k in playerList:
-            playerList[k] = main.FocInsertionSort(playerList[k])
+            playerList[k] = main.FocTimSort(playerList[k])
 
 
 def getSortKey(sortID):
@@ -916,6 +946,12 @@ def getSortKey(sortID):
     elif sortID == "11":
         return "SortByFoc"
 
+def getMinExpectWgt():
+    if float(LstWgtInputEntry.get()) != -1:
+        return float(LstWgtInputEntry.get())
+    else:
+        return float(MaxWgtInputEntry.get())*0.95
+
 
 def calculateMode_1():
     x = tree.get_children()
@@ -925,10 +961,8 @@ def calculateMode_1():
     _weaponAndRing = float(CurrentWgtInputEntry.get())
     _ratio = getWgtPercent()
     getFixTerm(FixTerm)
-    Player_SeparateByPoi = main.calculateMod1(_totalWeight, _weaponAndRing, _ratio, FixTerm)
-    if len(Player_SeparateByPoi) == 0:
-        msgbox.showinfo("警告", "无法根据输入数据找到护甲组合！\n请更换数据后尝试!")
-        return
+    Player_SeparateByPoi = main.calculateMod1(_totalWeight, _weaponAndRing, _ratio, FixTerm,
+                                              float(LstWgtInputEntry.get()))
     sortID = selectedAbs.get()
     sort(Player_SeparateByPoi, sortID)
     for k in Player_SeparateByPoi:
@@ -947,7 +981,8 @@ def calculateMode_2():
     _ratio = getWgtPercent()
     _tgtPoi = float(PoiInputEntry.get())
     getFixTerm(FixTerm)
-    Player_SeparateByPoi = main.calculateMod2(_totalWeight, _weaponAndRing, _ratio, FixTerm, _tgtPoi)
+    Player_SeparateByPoi = main.calculateMod2(_totalWeight, _weaponAndRing, _ratio, FixTerm, _tgtPoi,
+                                              float(LstWgtInputEntry.get()))
     if Player_SeparateByPoi == -1:
         msgbox.showinfo("警告", "无法根据输入数据找到护甲组合！\n请更换数据后尝试!")
         return
@@ -970,7 +1005,7 @@ def calculateMode_3():
     _ratio = getWgtPercent()
     sortID = selectedAbs.get()
     _sortKey = getSortKey(sortID)
-    Player = main.calculateMod3(_totalWeight, _weaponAndRing, _ratio, _sortKey)
+    Player = main.calculateMod3(_totalWeight, _weaponAndRing, _ratio, _sortKey, float(LstWgtInputEntry.get()))
     Player_SeparateByPoi["nil"] = Player
     sort(Player_SeparateByPoi, sortID)
     Player_SeparateByPoi["nil"].reverse()
@@ -991,7 +1026,7 @@ def calculateButtonFunction():
 
 def showInfo():
     msgbox.showinfo("说明", """
-点击计算按钮后程序未响应为正常情况，若未响应时间过久可能是你给的条件太罕见，需要计算很久。
+最低预期指可以接受的装备加武器加戒指的总重量下限，用于过滤与目标相差过大的目标。低可用负重的情况下或许需要进行修改。默认值-1为95%最大负重。
 
 模式1:
 给定可用负重，计算最大韧性的护甲搭配：
@@ -1064,7 +1099,6 @@ button_7.place(
     height=24.0,
 
 )
-
 
 button_8 = ttk.Button(
     text="https://github.com/Acquity2/EldenRingArmorOptimizer",
