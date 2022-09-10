@@ -531,7 +531,7 @@ class ArmorInputWidget extends StatelessWidget {
                                     return const Iterable<String>.empty();
                                   }
                                   return HelmList.where((String option) {
-                                    return option.contains(
+                                    return option.toLowerCase().contains(
                                         textEditingValue.text.toLowerCase());
                                   });
                                 },
@@ -579,7 +579,7 @@ class ArmorInputWidget extends StatelessWidget {
                                     return const Iterable<String>.empty();
                                   }
                                   return ChestList.where((String option) {
-                                    return option.contains(
+                                    return option.toLowerCase().contains(
                                         textEditingValue.text.toLowerCase());
                                   });
                                 },
@@ -627,7 +627,7 @@ class ArmorInputWidget extends StatelessWidget {
                                     return const Iterable<String>.empty();
                                   }
                                   return LegList.where((String option) {
-                                    return option.contains(
+                                    return option.toLowerCase().contains(
                                         textEditingValue.text.toLowerCase());
                                   });
                                 },
@@ -675,7 +675,7 @@ class ArmorInputWidget extends StatelessWidget {
                                     return const Iterable<String>.empty();
                                   }
                                   return GauntletList.where((String option) {
-                                    return option.contains(
+                                    return option.toLowerCase().contains(
                                         textEditingValue.text.toLowerCase());
                                   });
                                 },
@@ -2191,8 +2191,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void debugButton() {
-    print(69.75 ~/ 1 + 1);
-    print((double.parse(tgtPoiInput.text) / 4 * 3) ~/ 1 + 1);
+    //print(69.75 ~/ 1 + 1);
+    //print((double.parse(tgtPoiInput.text) / 4 * 3) ~/ 1 + 1);
     //  print('debug button pressed');
     //  print(weightPercentInput.text);
     //  print(wgtPercentStatue);
@@ -2201,8 +2201,8 @@ class _HomePageState extends State<HomePage> {
     //  print("tgtpoi " + tgtPoiInput.text);
     //  print("crtwgt " + currentWgtInput.text);
     //  print(ArmorFixList);
-    print(calculateMode);
-    print(sortMode);
+    //print(calculateMode);
+    //print(sortMode);
     //  print(calculateAvilableWeight());
     //  List<ArmorSet> testList = fixWeightFindMaxPoise();
     //  Map<double, List<ArmorSet>> testSepreateByPoiseMap =
@@ -2749,7 +2749,7 @@ void main() async {
   ChestList.add("nil");
   LegList.add("nil");
   GauntletList.add("nil");
-/*
+
   WidgetsFlutterBinding.ensureInitialized();
   // 必须加上这一行。
   await windowManager.ensureInitialized();
@@ -2766,7 +2766,6 @@ void main() async {
     await windowManager.show();
     await windowManager.focus();
   });
-  */
 
   runApp(MyApp());
 }

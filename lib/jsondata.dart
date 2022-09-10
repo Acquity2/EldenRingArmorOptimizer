@@ -37,6 +37,23 @@ var JsonData = {
     "Vita": 10.0,
     "Wgt": 3.8
 },{
+    "Fir": 3.7,
+    "Foc": 21.0,
+    "Hol": 3.7,
+    "Imm": 23.0,
+    "Lit": 3.9,
+    "Mag": 3.5,
+    "Name": "White Mask",
+    "Phy": 2.7,
+    "Poi": 2.0,
+    "PoiPerWgt": 0.625,
+    "Robu": 18.0,
+    "VSPie": 2.7,
+    "VSSla": 3.3,
+    "VSStr": 3.0,
+    "Vita": 10.0,
+    "Wgt": 3.2
+},{
     "Fir": 0.0,
     "Foc": 0.0,
     "Hol": 0.0,
@@ -6330,6 +6347,23 @@ var JsonData = {
     "Vita": 50.0,
     "Wgt": 7.7
 },{
+    "Fir": 9.4,
+    "Foc": 38.0,
+    "Hol": 9.4,
+    "Imm": 45.0,
+    "Lit": 10.1,
+    "Mag": 8.7,
+    "Name": "War Surgeon Gown (Altered)",
+    "Phy": 6.6,
+    "Poi": 2.0,
+    "PoiPerWgt": 0.3278688524590164,
+    "Robu": 32.0,
+    "VSPie": 6.6,
+    "VSSla": 7.9,
+    "VSStr": 7.0,
+    "Vita": 50.0,
+    "Wgt": 6.1
+},{
     "Fir": 10.1,
     "Foc": 44.0,
     "Hol": 10.1,
@@ -9650,6 +9684,23 @@ var JsonData = {
     "VSStr": 1.5,
     "Vita": 25.0,
     "Wgt": 1.7
+},{
+    "Fir": 2.4,
+    "Foc": 15.0,
+    "Hol": 2.4,
+    "Imm": 18.0,
+    "Lit": 2.6,
+    "Mag": 2.2,
+    "Name": "War Surgeon Gloves",
+    "Phy": 1.6,
+    "Poi": 1.0,
+    "PoiPerWgt": 0.4347826086956522,
+    "Robu": 13.0,
+    "VSPie": 1.6,
+    "VSSla": 2.0,
+    "VSStr": 1.8,
+    "Vita": 25.0,
+    "Wgt": 2.3
 },{
     "Fir": 4.3,
     "Foc": 14.0,
