@@ -37,6 +37,23 @@ var JsonData = {
     "Vita": 10.0,
     "Wgt": 3.8
 },{
+    "Fir": 0.0,
+    "Foc": 0.0,
+    "Hol": 0.0,
+    "Imm": 0.0,
+    "Lit": 0.0,
+    "Mag": 0.0,
+    "Name": "Nothing",
+    "Phy": 0.0,
+    "Poi": 0.0,
+    "PoiPerWgt": 0.0,
+    "Robu": 0.0,
+    "VSPie": 0.0,
+    "VSSla": 0.0,
+    "VSStr": 0.0,
+    "Vita": 0.0,
+    "Wgt": 0.000001
+},{
     "Fir": 3.4,
     "Foc": 9.0,
     "Hol": 3.1,
@@ -2861,6 +2878,23 @@ var JsonData = {
     "VSStr": 11.9,
     "Vita": 21.0,
     "Wgt": 10.7
+},{
+    "Fir": 0.0,
+    "Foc": 0.0,
+    "Hol": 0.0,
+    "Imm": 0.0,
+    "Lit": 0.0,
+    "Mag": 0.0,
+    "Name": "Nothing",
+    "Phy": 0.0,
+    "Poi": 0.0,
+    "PoiPerWgt": 0.0,
+    "Robu": 0.0,
+    "VSPie": 0.0,
+    "VSSla": 0.0,
+    "VSStr": 0.0,
+    "Vita": 0.0,
+    "Wgt": 0.000001
 },{
     "Fir": 11.9,
     "Foc": 67.0,
@@ -6333,6 +6367,23 @@ var JsonData = {
     "Vita": 13.0,
     "Wgt": 6.6
 },{
+    "Fir": 0.0,
+    "Foc": 0.0,
+    "Hol": 0.0,
+    "Imm": 0.0,
+    "Lit": 0.0,
+    "Mag": 0.0,
+    "Name": "Nothing",
+    "Phy": 0.0,
+    "Poi": 0.0,
+    "PoiPerWgt": 0.0,
+    "Robu": 0.0,
+    "VSPie": 0.0,
+    "VSSla": 0.0,
+    "VSStr": 0.0,
+    "Vita": 0.0,
+    "Wgt": 0.000001
+},{
     "Fir": 6.8,
     "Foc": 41.0,
     "Hol": 7.3,
@@ -8103,6 +8154,23 @@ var JsonData = {
     "VSStr": 2.9,
     "Vita": 7.0,
     "Wgt": 3.5
+},{
+    "Fir": 0.0,
+    "Foc": 0.0,
+    "Hol": 0.0,
+    "Imm": 0.0,
+    "Lit": 0.0,
+    "Mag": 0.0,
+    "Name": "Nothing",
+    "Phy": 0.0,
+    "Poi": 0.0,
+    "PoiPerWgt": 0.0,
+    "Robu": 0.0,
+    "VSPie": 0.0,
+    "VSSla": 0.0,
+    "VSStr": 0.0,
+    "Vita": 0.0,
+    "Wgt": 0.000001
 },{
     "Fir": 2.9,
     "Foc": 22.0,
@@ -10174,6 +10242,7 @@ var JsonData = {
     "Rotten Gravekeeper Cloak (Altered)": "腐败守墓斗篷（轻装）",
     "Mushroom Crown": "蘑菇王冠",
     "Black Dumpling": "黑头罩",
+    "Nothing": "无装备",
     "Lazuli Robe": "拉兹利长袍"
 }
 '''

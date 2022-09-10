@@ -39,6 +39,7 @@ var En = {
   "Weight:": "Weight:",
   "Alert!": "Alert!",
   "No armor set found!": "No armor set found!",
+  "Goat Tail": "Goat Tail",
 };
 var Zh = {
   "Up to 70% Burdern": "最大70%负重（中滚）",
@@ -64,7 +65,7 @@ var Zh = {
   "Robu.": "健壮",
   "Foc.": "理智",
   "Vita.": "抗死",
-  "Poi.": "韧性（面板）",
+  "Poi.": "强韧度（面板）",
   "Armor Finder:": "指定护甲：",
   "Helm:": "头盔：",
   "Chest:": "铠甲：",
@@ -73,7 +74,8 @@ var Zh = {
   "Please input all the fields": "请输入所有字段",
   "Weight:": "重量:",
   "Alert!": "警告！",
-  "No armor set found!": "未找到可用护甲组合！"
+  "No armor set found!": "未找到可用护甲组合！",
+  "Goat Tail": "大山羊护符",
 };
 
 language language1 = language(En, Zh);

@@ -5,6 +5,7 @@ import 'dart:convert';
 import '../../assets/lang/language.dart';
 import '../../ui/export.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Map languageMap = language1.ZH;
 String languageString = 'ZH';
@@ -15,6 +16,8 @@ String? sortMode = "Phy.Abs.";
 late ArmorData armorData;
 late Map<String, String> ArmorSetNameAttribute = {};
 final _globalKey = GlobalKey();
+bool _wearGoat = true;
+bool _poiInputEnable = false;
 
 List<Node> testnodes = [
   const Node(label: 'documents', key: 'docs', children: [
@@ -240,7 +243,7 @@ class ArmorSet {
   double vita = 0;
   double poi = 0;
 
-  ArmorSet(this.helm, this.chest, this.leg, this.gauntlet) {
+  ArmorSet(this.helm, this.chest, this.leg, this.gauntlet, this.poi) {
     wgt = helm.wgt + chest.wgt + leg.wgt + gauntlet.wgt;
     phy = 100 -
         100 *
@@ -294,7 +297,6 @@ class ArmorSet {
     robu = helm.robu + chest.robu + leg.robu + gauntlet.robu;
     foc = helm.foc + chest.foc + leg.foc + gauntlet.foc;
     vita = helm.vita + chest.vita + leg.vita + gauntlet.vita;
-    poi = helm.poi + chest.poi + leg.poi + gauntlet.poi;
   }
 
   String getName() {
@@ -356,11 +358,12 @@ class PoiInputBox extends StatefulWidget {
 }
 
 class _PoiInputBoxState extends State<PoiInputBox> {
-  String hint_Text = 'Available In Mode.2';
+  String hint_Text = 'AVL In Mode.2';
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: tgtPoiInput,
+      enabled: _poiInputEnable,
       textAlign: TextAlign.start,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 2),
@@ -1050,8 +1053,9 @@ class _ModeSelectButtonState extends State<ModeSelectButton> {
                   ),
                 ),
                 onPressed: () {
+                  _poiInputEnable = false;
                   (_globalKey.currentState as _PoiInputBoxState).hint_Text =
-                      'Available In Mode.2';
+                      'AVL In Mode.2';
                   (_globalKey.currentState as _PoiInputBoxState)
                       .setState(() {});
                   pressButton(1);
@@ -1080,8 +1084,9 @@ class _ModeSelectButtonState extends State<ModeSelectButton> {
                   ),
                 ),
                 onPressed: () {
+                  _poiInputEnable = true;
                   (_globalKey.currentState as _PoiInputBoxState).hint_Text =
-                      'Expected Poise Value';
+                      'Expected Poise';
                   (_globalKey.currentState as _PoiInputBoxState)
                       .setState(() {});
                   pressButton(2);
@@ -1110,8 +1115,9 @@ class _ModeSelectButtonState extends State<ModeSelectButton> {
                   ),
                 ),
                 onPressed: () {
+                  _poiInputEnable = false;
                   (_globalKey.currentState as _PoiInputBoxState).hint_Text =
-                      'Available In Mode.2';
+                      'AVL In Mode.2';
                   (_globalKey.currentState as _PoiInputBoxState)
                       .setState(() {});
                   pressButton(3);
@@ -1263,6 +1269,9 @@ class _HomePageState extends State<HomePage> {
                                       width: 905,
                                       child: OutlinedButton(
                                           onPressed: () {
+                                            const url =
+                                                "https://github.com/Acquity2/EldenRingArmorOptimizer";
+                                            launch(url);
                                             print("PRESSED");
                                           },
                                           child: const Text(
@@ -1561,10 +1570,37 @@ class _HomePageState extends State<HomePage> {
                           Positioned(
                               left: 100,
                               top: 62,
-                              child: SizedBox(
-                                  width: 217,
+                              child: Row(children: [
+                                SizedBox(
+                                  width: 110,
                                   height: 23,
-                                  child: PoiInputBox(_globalKey))),
+                                  child: PoiInputBox(_globalKey),
+                                ),
+                                SizedBox(
+                                    width: 23,
+                                    height: 23,
+                                    child: Checkbox(
+                                        value: _wearGoat,
+                                        activeColor: FvColors.button49FontColor,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _wearGoat = value!;
+                                            print(_wearGoat);
+                                          });
+                                        })),
+                                SizedBox(
+                                  width: 100,
+                                  height: 24,
+                                  child: Text(
+                                    languageMap["Goat Tail"],
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color: FvColors.button49FontColor,
+                                        wordSpacing: 1.0),
+                                  ),
+                                )
+                              ])),
 //-- End TextBox_Container_30 --//
 //-- Component Text_TextView_31 --//
                           Positioned(
@@ -2155,6 +2191,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void debugButton() {
+    print(69.75 ~/ 1 + 1);
+    print((double.parse(tgtPoiInput.text) / 4 * 3) ~/ 1 + 1);
     //  print('debug button pressed');
     //  print(weightPercentInput.text);
     //  print(wgtPercentStatue);
@@ -2306,7 +2344,7 @@ class _HomePageState extends State<HomePage> {
     List<ArmorSet> armorSetList = [];
     Map ArmorSetID = getArmorFixID(ArmorFixList, armorData);
     int key = 0;
-    int limit = 400000;
+    int limit = 200000;
     double tmpWeight = 0;
     for (int ic = 0; ic < armorData.chests.length; ic++) {
       if (ArmorSetID["chest"] != -1 && ic != ArmorSetID["chest"]) {
@@ -2349,11 +2387,29 @@ class _HomePageState extends State<HomePage> {
                         armorData.chests[ic].wgt +
                         armorData.legs[il].wgt >
                     avilableWeight * minWgtPercent) {
+              double poi = 0.1;
+              if (_wearGoat == true) {
+                poi = (armorData.gauntlets[ig].poi +
+                        armorData.helms[ih].poi +
+                        armorData.chests[ic].poi +
+                        armorData.legs[il].poi) /
+                    3 *
+                    4 *
+                    100 ~/
+                    1 /
+                    100;
+              } else {
+                poi = armorData.gauntlets[ig].poi +
+                    armorData.helms[ih].poi +
+                    armorData.chests[ic].poi +
+                    armorData.legs[il].poi;
+              }
               armorSetList.add(ArmorSet(
                   armorData.helms[ih],
                   armorData.chests[ic],
                   armorData.legs[il],
-                  armorData.gauntlets[ig]));
+                  armorData.gauntlets[ig],
+                  poi));
               key++;
             }
             if (key >= limit) {
@@ -2368,11 +2424,17 @@ class _HomePageState extends State<HomePage> {
 
   List<ArmorSet> fixWeightPoiseFindMaxAbs() {
     double avilableWeight = calculateAvilableWeight();
+    double targetPoise = 0;
     if (tgtPoiInput.text == "") {
       nullInputAlert(context);
       throw Error();
     }
-    double targetPoise = double.parse(tgtPoiInput.text);
+    if (_wearGoat == true) {
+      targetPoise = (double.parse(tgtPoiInput.text) / 4 * 3) ~/ 1 + 1;
+    } else {
+      targetPoise = double.parse(tgtPoiInput.text);
+    }
+
     if (avilableWeight == -1) {
       nullInputAlert(context);
       throw Error();
@@ -2387,8 +2449,8 @@ class _HomePageState extends State<HomePage> {
     List<ArmorSet> armorSetList = [];
     Map armorSetID = getArmorFixID(ArmorFixList, armorData);
     int key = 0;
-    int limit = 9000;
-    int limit2 = 500000;
+    int limit = 9000000;
+    int limit2 = 50000000;
     int count = 0;
     for (int ic = 0; ic < armorData.chests.length; ic++) {
       if (armorSetID["chest"] != -1 && ic != armorSetID["chest"]) {
@@ -2436,11 +2498,29 @@ class _HomePageState extends State<HomePage> {
                         armorData.chests[ic].poi +
                         armorData.legs[il].poi ==
                     targetPoise) {
+              double poi = 0.1;
+              if (_wearGoat == true) {
+                poi = (armorData.gauntlets[ig].poi +
+                        armorData.helms[ih].poi +
+                        armorData.chests[ic].poi +
+                        armorData.legs[il].poi) /
+                    3 *
+                    4 *
+                    100 ~/
+                    1 /
+                    100;
+              } else {
+                poi = armorData.gauntlets[ig].poi +
+                    armorData.helms[ih].poi +
+                    armorData.chests[ic].poi +
+                    armorData.legs[il].poi;
+              }
               armorSetList.add(ArmorSet(
                   armorData.helms[ih],
                   armorData.chests[ic],
                   armorData.legs[il],
-                  armorData.gauntlets[ig]));
+                  armorData.gauntlets[ig],
+                  poi));
               key++;
               count = 0;
             } else {
@@ -2495,7 +2575,7 @@ class _HomePageState extends State<HomePage> {
     Map ArmorSetID = getArmorFixID(ArmorFixList, armorData);
     int key = 0;
     int limit = 400000;
-    int limit2 = 1000000;
+    int limit2 = 100000;
     int count = 0;
     for (int ic = 0; ic < armorData.chests.length; ic++) {
       if (ArmorSetID["chest"] != -1 && ic != ArmorSetID["chest"]) {
@@ -2537,16 +2617,35 @@ class _HomePageState extends State<HomePage> {
                         armorData.chests[ic].wgt +
                         armorData.legs[il].wgt >
                     avilableWeight * minWgtPercent) {
+              double poi = 0.1;
+              if (_wearGoat == true) {
+                poi = (armorData.gauntlets[ig].poi +
+                        armorData.helms[ih].poi +
+                        armorData.chests[ic].poi +
+                        armorData.legs[il].poi) /
+                    3 *
+                    4 *
+                    100 ~/
+                    1 /
+                    100;
+              } else {
+                poi = armorData.gauntlets[ig].poi +
+                    armorData.helms[ih].poi +
+                    armorData.chests[ic].poi +
+                    armorData.legs[il].poi;
+              }
               armorSetList.add(ArmorSet(
                   armorData.helms[ih],
                   armorData.chests[ic],
                   armorData.legs[il],
-                  armorData.gauntlets[ig]));
+                  armorData.gauntlets[ig],
+                  poi));
               key++;
               count = 0;
             } else {
               count++;
             }
+
             if (key >= limit || count > limit2) {
               return armorSetListSort(armorSetList, sortMode!);
             }
@@ -2667,7 +2766,8 @@ void main() async {
     await windowManager.show();
     await windowManager.focus();
   });
-*/
+  */
+
   runApp(MyApp());
 }
 
